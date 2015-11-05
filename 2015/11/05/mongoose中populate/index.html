@@ -3,17 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Frank Cheng&#39;s blog</title>
+  <title>mongoose中populate | Frank Cheng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Frank Cheng's blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="之前一直很想不通mongoose里面的populate到底做了什么事情，然后用populate和自己手动findById有什么区别。因为mongodb里面没有join，我一直希望populate能够带来效率上的提升。
+Populate源码地址在这里
+12345678910  mod.Model.find(match, select, mod.options.options, next.bind(t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongoose中populate">
+<meta property="og:url" content="http://yoursite.com/2015/11/05/mongoose中populate/index.html">
 <meta property="og:site_name" content="Frank Cheng's blog">
-<meta property="og:description">
+<meta property="og:description" content="之前一直很想不通mongoose里面的populate到底做了什么事情，然后用populate和自己手动findById有什么区别。因为mongodb里面没有join，我一直希望populate能够带来效率上的提升。
+Populate源码地址在这里
+12345678910  mod.Model.find(match, select, mod.options.options, next.bind(t">
+<meta property="og:updated_time" content="2015-11-05T03:00:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Frank Cheng's blog">
-<meta name="twitter:description">
+<meta name="twitter:title" content="mongoose中populate">
+<meta name="twitter:description" content="之前一直很想不通mongoose里面的populate到底做了什么事情，然后用populate和自己手动findById有什么区别。因为mongodb里面没有join，我一直希望populate能够带来效率上的提升。
+Populate源码地址在这里
+12345678910  mod.Model.find(match, select, mod.options.options, next.bind(t">
   
     <link rel="alternative" href="/atom.xml" title="Frank Cheng&#39;s blog" type="application/atom+xml">
   
@@ -59,9 +66,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-mongoose中populate" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-mongoose中populate" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/11/05/mongoose中populate/" class="article-date">
   <time datetime="2015-11-05T02:50:51.000Z" itemprop="datePublished">2015-11-05</time>
@@ -74,8 +79,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/05/mongoose中populate/">mongoose中populate</a>
+    <h1 class="article-title" itemprop="name">
+      mongoose中populate
     </h1>
   
 
@@ -100,55 +105,20 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-teamshare-SRP" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/30/teamshare-SRP/" class="article-date">
-  <time datetime="2015-10-30T03:56:45.000Z" itemprop="datePublished">2015-10-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/30/teamshare-SRP/">teamshare-SRP</a>
-    </h1>
+    <a href="/2015/10/30/teamshare-SRP/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">teamshare-SRP</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="SRP">SRP</h1><p>SRP is short for single responsible principle. It decribes when we build software, we should make class have only one reason to change. When achived this, it will help us to seprete concern. It doesn’t mean a method should do only one thing, but only have one reason to change.</p>
-<h3 id="Code_example">Code example</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;@implement Rectangle &#10;- (void) draw&#10;&#123;&#10;    code&#10;&#125;&#10;&#10;- (CGFloat)area&#10;&#123;&#10;    code&#10;&#125;&#10;@end</span><br></pre></td></tr></table></figure>
-<p>If we change the draw style, the <code>Rectangle</code> will be changed. If area calculating algorithm changes, it also will be changed.</p>
-<p>Better design:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@implement Rectangle&#10;- (void) draw&#10;&#123;&#10;    code&#10;&#125;&#10;@end&#10;&#10;@implent GeometricRectangle&#10;+ (CGFloat)area:(Rectangle *)rect&#10;&#123;&#10;    code&#10;&#125;&#10;@end</span><br></pre></td></tr></table></figure>
-<h3 id="What_is_responsibility">What is responsibility</h3><p>Motive for changing a class. If you can think of more than one motive for changing a class, then that class has more than one responsibilty.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@interface Modem&#10;&#123;&#10;    - (void)dial:(NSString)number;&#10;    - (void)hangup;&#10;    - (void)send:(NSString)singleCharacter;&#10;    - (void)recv;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>We can sperate it into two category. One is connection. So dial and hangup belows to this category. The other is data communication. It contains send and recv.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/30/teamshare-SRP/" data-id="ciglnhwkp0001x89kf7vrtd9q" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
 
-
-  
-  
 </section>
         
           <aside id="sidebar">
