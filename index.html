@@ -61,6 +61,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-解决jenkins没法发送邮件到gmail的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" class="article-date">
+  <time datetime="2015-11-05T06:59:50.000Z" itemprop="datePublished">2015-11-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/05/解决jenkins没法发送邮件到gmail的问题/">解决jenkins没法发送邮件到gmail的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间搞了个jenkins服务器跑测试用例，但是很奇怪的事情是用它自带的smtp服务器进行发送不够稳定，而且不能发送到gmail（<del>原因未知</del>）。</p>
+<p>就这样忍受了好长一段时间之后我终于受不了了，然后放狗去google上搜了一圈，然后折腾了一下终于找到解决方法如下：</p>
+<h3 id="设置Admin_Email_Address">设置Admin Email Address</h3><p>设置的地方在， 系统管理 -&gt; 系统设置 -&gt; Jenkins Location ， 如下图</p>
+<p><img src="/QQ20151105-0@2x.png" alt=""></p>
+<p>地址填写你的smtp服务器对应的邮件账号的地址</p>
+<h3 id="配置smtp服务器">配置smtp服务器</h3><p>还是在系统设置界面，最下面配置。smtp服务器的配置方法可以去你对应的电子邮件提供商的官网查。</p>
+<p><strong>如果是qq这种垃圾邮箱的话，还要在设置里面开启smtp权限</strong></p>
+<p><img src="/QQ20151105-3@2x.png" alt=""></p>
+<p><img src="/QQ20151105-4@2x.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" data-id="ciglvvc950003vj9krged0sp8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-mongoose中populate" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/11/05/mongoose中populate/" class="article-date">
@@ -94,7 +139,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/05/mongoose中populate/" data-id="ciglnhwjz0000x89kvmw504f3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/05/mongoose中populate/" data-id="ciglvs9ci0000vj9ky2a1yhxa" class="article-share-link">Share</a>
       
       
     </footer>
@@ -138,7 +183,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/30/teamshare-SRP/" data-id="ciglnhwkp0001x89kf7vrtd9q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/30/teamshare-SRP/" data-id="ciglvs9d80001vj9koi0sd9ru" class="article-share-link">Share</a>
       
       
     </footer>
@@ -163,7 +208,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -173,6 +218,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/11/05/解决jenkins没法发送邮件到gmail的问题/">解决jenkins没法发送邮件到gmail的问题</a>
+          </li>
         
           <li>
             <a href="/2015/11/05/mongoose中populate/">mongoose中populate</a>

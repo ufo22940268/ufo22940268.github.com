@@ -3,18 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>teamshare-SRP | Frank Cheng&#39;s blog</title>
+  <title>解决jenkins没法发送邮件到gmail的问题 | Frank Cheng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="SRPSRP is short for single responsible principle. It decribes when we build software, we should make class have only one reason to change. When achived this, it will help us to seprete concern. It doe">
+  <meta name="description" content="前段时间搞了个jenkins服务器跑测试用例，但是很奇怪的事情是用它自带的smtp服务器进行发送不够稳定，而且不能发送到gmail（原因未知）。
+就这样忍受了好长一段时间之后我终于受不了了，然后放狗去google上搜了一圈，然后折腾了一下终于找到解决方法如下：
+设置Admin Email Address设置的地方在， 系统管理 -&amp;gt; 系统设置 -&amp;gt; Jenkins Location ，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="teamshare-SRP">
-<meta property="og:url" content="http://yoursite.com/2015/10/30/teamshare-SRP/index.html">
+<meta property="og:title" content="解决jenkins没法发送邮件到gmail的问题">
+<meta property="og:url" content="http://yoursite.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/index.html">
 <meta property="og:site_name" content="Frank Cheng's blog">
-<meta property="og:description" content="SRPSRP is short for single responsible principle. It decribes when we build software, we should make class have only one reason to change. When achived this, it will help us to seprete concern. It doe">
-<meta property="og:updated_time" content="2015-10-30T04:23:18.000Z">
+<meta property="og:description" content="前段时间搞了个jenkins服务器跑测试用例，但是很奇怪的事情是用它自带的smtp服务器进行发送不够稳定，而且不能发送到gmail（原因未知）。
+就这样忍受了好长一段时间之后我终于受不了了，然后放狗去google上搜了一圈，然后折腾了一下终于找到解决方法如下：
+设置Admin Email Address设置的地方在， 系统管理 -&amp;gt; 系统设置 -&amp;gt; Jenkins Location ，">
+<meta property="og:image" content="http://yoursite.com/QQ20151105-0@2x.png">
+<meta property="og:image" content="http://yoursite.com/QQ20151105-3@2x.png">
+<meta property="og:image" content="http://yoursite.com/QQ20151105-4@2x.png">
+<meta property="og:updated_time" content="2015-11-05T07:21:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="teamshare-SRP">
-<meta name="twitter:description" content="SRPSRP is short for single responsible principle. It decribes when we build software, we should make class have only one reason to change. When achived this, it will help us to seprete concern. It doe">
+<meta name="twitter:title" content="解决jenkins没法发送邮件到gmail的问题">
+<meta name="twitter:description" content="前段时间搞了个jenkins服务器跑测试用例，但是很奇怪的事情是用它自带的smtp服务器进行发送不够稳定，而且不能发送到gmail（原因未知）。
+就这样忍受了好长一段时间之后我终于受不了了，然后放狗去google上搜了一圈，然后折腾了一下终于找到解决方法如下：
+设置Admin Email Address设置的地方在， 系统管理 -&amp;gt; 系统设置 -&amp;gt; Jenkins Location ，">
   
     <link rel="alternative" href="/atom.xml" title="Frank Cheng&#39;s blog" type="application/atom+xml">
   
@@ -60,10 +69,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-teamshare-SRP" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-解决jenkins没法发送邮件到gmail的问题" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/10/30/teamshare-SRP/" class="article-date">
-  <time datetime="2015-10-30T03:56:45.000Z" itemprop="datePublished">2015-10-30</time>
+    <a href="/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" class="article-date">
+  <time datetime="2015-11-05T06:59:50.000Z" itemprop="datePublished">2015-11-05</time>
 </a>
     
   </div>
@@ -74,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      teamshare-SRP
+      解决jenkins没法发送邮件到gmail的问题
     </h1>
   
 
@@ -82,19 +91,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="SRP">SRP</h1><p>SRP is short for single responsible principle. It decribes when we build software, we should make class have only one reason to change. When achived this, it will help us to seprete concern. It doesn’t mean a method should do only one thing, but only have one reason to change.</p>
-<h3 id="Code_example">Code example</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;@implement Rectangle &#10;- (void) draw&#10;&#123;&#10;    code&#10;&#125;&#10;&#10;- (CGFloat)area&#10;&#123;&#10;    code&#10;&#125;&#10;@end</span><br></pre></td></tr></table></figure>
-<p>If we change the draw style, the <code>Rectangle</code> will be changed. If area calculating algorithm changes, it also will be changed.</p>
-<p>Better design:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@implement Rectangle&#10;- (void) draw&#10;&#123;&#10;    code&#10;&#125;&#10;@end&#10;&#10;@implent GeometricRectangle&#10;+ (CGFloat)area:(Rectangle *)rect&#10;&#123;&#10;    code&#10;&#125;&#10;@end</span><br></pre></td></tr></table></figure>
-<h3 id="What_is_responsibility">What is responsibility</h3><p>Motive for changing a class. If you can think of more than one motive for changing a class, then that class has more than one responsibilty.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@interface Modem&#10;&#123;&#10;    - (void)dial:(NSString)number;&#10;    - (void)hangup;&#10;    - (void)send:(NSString)singleCharacter;&#10;    - (void)recv;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>We can sperate it into two category. One is connection. So dial and hangup belows to this category. The other is data communication. It contains send and recv.</p>
+        <p>前段时间搞了个jenkins服务器跑测试用例，但是很奇怪的事情是用它自带的smtp服务器进行发送不够稳定，而且不能发送到gmail（<del>原因未知</del>）。</p>
+<p>就这样忍受了好长一段时间之后我终于受不了了，然后放狗去google上搜了一圈，然后折腾了一下终于找到解决方法如下：</p>
+<h3 id="设置Admin_Email_Address">设置Admin Email Address</h3><p>设置的地方在， 系统管理 -&gt; 系统设置 -&gt; Jenkins Location ， 如下图</p>
+<p><img src="/QQ20151105-0@2x.png" alt=""></p>
+<p>地址填写你的smtp服务器对应的邮件账号的地址</p>
+<h3 id="配置smtp服务器">配置smtp服务器</h3><p>还是在系统设置界面，最下面配置。smtp服务器的配置方法可以去你对应的电子邮件提供商的官网查。</p>
+<p><strong>如果是qq这种垃圾邮箱的话，还要在设置里面开启smtp权限</strong></p>
+<p><img src="/QQ20151105-3@2x.png" alt=""></p>
+<p><img src="/QQ20151105-4@2x.png" alt=""></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/30/teamshare-SRP/" data-id="ciglvs9d80001vj9koi0sd9ru" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" data-id="ciglvvc950003vj9krged0sp8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -103,15 +113,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/11/05/mongoose中populate/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          mongoose中populate
-        
-      </div>
-    </a>
   
+    <a href="/2015/11/05/mongoose中populate/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mongoose中populate</div>
+    </a>
   
 </nav>
 
