@@ -61,6 +61,58 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-S-O-L-I-D之开闭原则" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/11/06/S-O-L-I-D之开闭原则/" class="article-date">
+  <time datetime="2015-11-06T03:26:04.000Z" itemprop="datePublished">2015-11-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/06/S-O-L-I-D之开闭原则/">S.O.L.I.D之开闭原则</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="开闭原则">开闭原则</h2><h3 id="什么是开闭原则">什么是开闭原则</h3><p><code>在面向对象编程领域中，开闭原则规定“软件中的对象（类，模块，函数等等）应该对于扩展是开放的，但是对于修改是封闭的”</code></p>
+<p>换句话说，开闭原则做了一件很神器的事情：在我们对软件功能修改的时候, 并没有对原来的类进行修改，但是确实对软件的功能进行了修改。</p>
+<h3 id="如何做到开闭">如何做到开闭</h3><p><strong>模板方法</strong></p>
+<p>在android里面所有的视图类都集成于View。</p>
+<p>View的结构如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//code</span></span><br><span class="line">        onDraw(canvas);</span><br><span class="line">        <span class="comment">//code</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时候你就可以继承View，来绘制你所需要的图形。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">        drawTriangle();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>装饰者模式</strong></p>
+<p>java中的io类。</p>
+<p>如果你需要对一个InputStream加上从文件读取的功能，那么就用FileInputStream进行包装</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InputStream stream = <span class="keyword">new</span> InputStream()</span><br><span class="line">FileInputStream fis = <span class="keyword">new</span> FileInputStream(stream);</span><br></pre></td></tr></table></figure>
+<p>inputStream的代码逻辑没有被改写，但是你现在获取到了新的，对文件操作的能力。</p>
+<h3 id="开闭原则的好处">开闭原则的好处</h3><p>更好的保证了类的内聚，在修改代码之后不需要对类进行重新编译。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/11/06/S-O-L-I-D之开闭原则/" data-id="cign6pnba0003pi9k631bfgbe" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/团队分享-CleanCode/">团队分享 CleanCode</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-解决jenkins没法发送邮件到gmail的问题" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" class="article-date">
@@ -96,7 +148,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" data-id="ciglvvc950003vj9krged0sp8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" data-id="cign6pnau0000pi9k78erlws6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -139,7 +191,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/05/mongoose中populate/" data-id="ciglvs9ci0000vj9ky2a1yhxa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/05/mongoose中populate/" data-id="cign6pnb80002pi9k7134mr9t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -183,7 +235,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/30/teamshare-SRP/" data-id="ciglvs9d80001vj9koi0sd9ru" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/30/teamshare-SRP/" data-id="cign6pnb60001pi9ki3xlvkcu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -201,14 +253,28 @@
     
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队分享-CleanCode/">团队分享 CleanCode</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/团队分享-CleanCode/" style="font-size: 10px;">团队分享 CleanCode</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -218,6 +284,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/11/06/S-O-L-I-D之开闭原则/">S.O.L.I.D之开闭原则</a>
+          </li>
         
           <li>
             <a href="/2015/11/05/解决jenkins没法发送邮件到gmail的问题/">解决jenkins没法发送邮件到gmail的问题</a>
