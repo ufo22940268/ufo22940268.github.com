@@ -3,18 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>teamshare-SRP | Frank Cheng&#39;s blog</title>
+  <title>Tag: CleanCode | Frank Cheng&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="SRPSRP is short for single responsible principle. It decribes when we build software, we should make class have only one reason to change. When achived this, it will help us to seprete concern. It doe">
-<meta property="og:type" content="article">
-<meta property="og:title" content="teamshare-SRP">
-<meta property="og:url" content="http://yoursite.com/2015/10/30/teamshare-SRP/index.html">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Frank Cheng's blog">
+<meta property="og:url" content="http://yoursite.com/tags/CleanCode/index.html">
 <meta property="og:site_name" content="Frank Cheng's blog">
-<meta property="og:description" content="SRPSRP is short for single responsible principle. It decribes when we build software, we should make class have only one reason to change. When achived this, it will help us to seprete concern. It doe">
-<meta property="og:updated_time" content="2015-11-06T04:56:02.000Z">
+<meta property="og:description">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="teamshare-SRP">
-<meta name="twitter:description" content="SRPSRP is short for single responsible principle. It decribes when we build software, we should make class have only one reason to change. When achived this, it will help us to seprete concern. It doe">
+<meta name="twitter:title" content="Frank Cheng's blog">
+<meta name="twitter:description">
   
     <link rel="alternative" href="/atom.xml" title="Frank Cheng&#39;s blog" type="application/atom+xml">
   
@@ -60,66 +59,58 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-teamshare-SRP" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/30/teamshare-SRP/" class="article-date">
-  <time datetime="2015-10-30T03:56:45.000Z" itemprop="datePublished">2015-10-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      teamshare-SRP
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2015" class="archive-year">2015</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2015/11/06/S-O-L-I-D之开闭原则/" class="archive-article-date">
+  <time datetime="2015-11-06T03:26:04.000Z" itemprop="datePublished">Nov 6</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2015/11/06/S-O-L-I-D之开闭原则/">S.O.L.I.D之开闭原则</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="SRP">SRP</h1><p>SRP is short for single responsible principle. It decribes when we build software, we should make class have only one reason to change. When achived this, it will help us to seprete concern. It doesn’t mean a method should do only one thing, but only have one reason to change.</p>
-<h3 id="Code_example">Code example</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;@implement Rectangle &#10;- (void) draw&#10;&#123;&#10;    code&#10;&#125;&#10;&#10;- (CGFloat)area&#10;&#123;&#10;    code&#10;&#125;&#10;@end</span><br></pre></td></tr></table></figure>
-<p>If we change the draw style, the <code>Rectangle</code> will be changed. If area calculating algorithm changes, it also will be changed.</p>
-<p>Better design:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@implement Rectangle&#10;- (void) draw&#10;&#123;&#10;    code&#10;&#125;&#10;@end&#10;&#10;@implent GeometricRectangle&#10;+ (CGFloat)area:(Rectangle *)rect&#10;&#123;&#10;    code&#10;&#125;&#10;@end</span><br></pre></td></tr></table></figure>
-<h3 id="What_is_responsibility">What is responsibility</h3><p>Motive for changing a class. If you can think of more than one motive for changing a class, then that class has more than one responsibilty.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@interface Modem&#10;&#123;&#10;    - (void)dial:(NSString)number;&#10;    - (void)hangup;&#10;    - (void)send:(NSString)singleCharacter;&#10;    - (void)recv;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>We can sperate it into two category. One is connection. So dial and hangup belows to this category. The other is data communication. It contains send and recv.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/30/teamshare-SRP/" data-id="cign6pnb60001pi9ki3xlvkcu" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CleanCode/">CleanCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/团队分享/">团队分享</a></li></ul>
-
-    </footer>
+    </header>
   </div>
+</article>
   
     
-<nav id="article-nav">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2015/10/30/teamshare-SRP/" class="archive-article-date">
+  <time datetime="2015-10-30T03:56:45.000Z" itemprop="datePublished">Oct 30</time>
+</a>
+      
   
-    <a href="/2015/11/05/mongoose中populate/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          mongoose中populate
-        
-      </div>
-    </a>
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2015/10/30/teamshare-SRP/">teamshare-SRP</a>
+    </h1>
   
-  
-</nav>
 
-  
+    </header>
+  </div>
 </article>
-
+  
+  
+    </div></section>
+  
 </section>
         
           <aside id="sidebar">
