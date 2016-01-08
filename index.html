@@ -134,13 +134,17 @@ ColoredTriangle.prototype = triangle;
 
 <span class="comment">//Output: color: red</span>
 </code></pre><hr>
-<p>也许你会说，还有第三种方法<code>if (obj.a)</code>。<br>没错，很多人都这么用。但是其实这种用法非常糟糕，javascript里面的布尔转换本来就很容易引发bug。<br>比如：<br>    Boolean([]) //true<br>    Boolean({}) //true<br>    Boolean(0) //false<br>    Boolean(1) //true</p>
-<p>所以还是不要偷懒，用<code>in</code>和<code>hasOwnProperty</code>来检查属性吧。</p>
+<p>也许你会说，还有第三种方法<code>if (obj.a)</code>。<br>没错，很多人都这么用。但是其实这种用法非常糟糕，javascript里面的布尔转换本来就很容易引发bug。<br>比如：</p>
+<pre><code><span class="function"><span class="title">Boolean</span><span class="params">([])</span></span> <span class="comment">//true</span>
+<span class="function"><span class="title">Boolean</span><span class="params">({})</span></span> <span class="comment">//true</span>
+<span class="function"><span class="title">Boolean</span><span class="params">(<span class="number">0</span>)</span></span> <span class="comment">//false</span>
+<span class="function"><span class="title">Boolean</span><span class="params">(<span class="number">1</span>)</span></span> <span class="comment">//true</span>
+</code></pre><p>所以还是不要偷懒，用<code>in</code>和<code>hasOwnProperty</code>来检查属性吧。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/09/hasOwnProperty/" data-id="cij66tq6w0000jb9khy4y8xu2" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/09/hasOwnProperty/" data-id="cij66uwsz000kl19k2u71qifi" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/09/hasOwnProperty/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -235,7 +239,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/07/prototype/" data-id="cij66t0kq000afn9koardp8e4" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/07/prototype/" data-id="cij66uwsi000al19kvbkygl9e" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/07/prototype/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -292,7 +296,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/05/promise-study/" data-id="cij66t0kt000dfn9kzg8488jq" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/05/promise-study/" data-id="cij66uwso000dl19k9e09vapr" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/05/promise-study/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -335,7 +339,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/12/21/speed-up-webstorm-debug/" data-id="cij66t0ko0009fn9k4rmcqofj" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2015/12/21/speed-up-webstorm-debug/" data-id="cij66uwsg0009l19kpfehqaej" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2015/12/21/speed-up-webstorm-debug/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -388,7 +392,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/" data-id="cij66t0ky000hfn9kl233h26r" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/" data-id="cij66uwsw000hl19kziiqr9ha" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -460,7 +464,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/11/19/Jenkins上搭建Android构建环境/" data-id="cij66t0l4000nfn9kkfzh1frp" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2015/11/19/Jenkins上搭建Android构建环境/" data-id="cij66uwta000ol19k9ig68151" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2015/11/19/Jenkins上搭建Android构建环境/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -514,7 +518,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/11/06/S-O-L-I-D之开闭原则/" data-id="cij66t0l1000kfn9k1rkvp1um" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2015/11/06/S-O-L-I-D之开闭原则/" data-id="cij66uwt3000ll19kwb8xgl7g" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2015/11/06/S-O-L-I-D之开闭原则/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -563,7 +567,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" data-id="cij66t0ke0001fn9k9rcfnz6s" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" data-id="cij66uws00001l19ksir0k5s9" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -610,7 +614,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/11/05/mongoose中populate/" data-id="cij66t0kw000efn9k8krcc9fv" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2015/11/05/mongoose中populate/" data-id="cij66uwss000el19k27zjt0nw" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2015/11/05/mongoose中populate/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -658,7 +662,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/10/30/teamshare-SRP/" data-id="cij66t0kl0004fn9kxh24yj6m" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2015/10/30/teamshare-SRP/" data-id="cij66uwsa0004l19kd0c1duxv" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2015/10/30/teamshare-SRP/#disqus_thread" class="article-comment-link">Comments</a>
       

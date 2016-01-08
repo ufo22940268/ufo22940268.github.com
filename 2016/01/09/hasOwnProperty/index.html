@@ -35,7 +35,7 @@ function ColoredTriangle() {
 }
 
 Co">
-<meta property="og:updated_time" content="2016-01-08T21:21:05.000Z">
+<meta property="og:updated_time" content="2016-01-08T21:22:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript中的属性">
 <meta name="twitter:description" content="判断一个对象中是否有某个属性。有下面两种方法：
@@ -169,13 +169,17 @@ ColoredTriangle.prototype = triangle;
 
 <span class="comment">//Output: color: red</span>
 </code></pre><hr>
-<p>也许你会说，还有第三种方法<code>if (obj.a)</code>。<br>没错，很多人都这么用。但是其实这种用法非常糟糕，javascript里面的布尔转换本来就很容易引发bug。<br>比如：<br>    Boolean([]) //true<br>    Boolean({}) //true<br>    Boolean(0) //false<br>    Boolean(1) //true</p>
-<p>所以还是不要偷懒，用<code>in</code>和<code>hasOwnProperty</code>来检查属性吧。</p>
+<p>也许你会说，还有第三种方法<code>if (obj.a)</code>。<br>没错，很多人都这么用。但是其实这种用法非常糟糕，javascript里面的布尔转换本来就很容易引发bug。<br>比如：</p>
+<pre><code><span class="function"><span class="title">Boolean</span><span class="params">([])</span></span> <span class="comment">//true</span>
+<span class="function"><span class="title">Boolean</span><span class="params">({})</span></span> <span class="comment">//true</span>
+<span class="function"><span class="title">Boolean</span><span class="params">(<span class="number">0</span>)</span></span> <span class="comment">//false</span>
+<span class="function"><span class="title">Boolean</span><span class="params">(<span class="number">1</span>)</span></span> <span class="comment">//true</span>
+</code></pre><p>所以还是不要偷懒，用<code>in</code>和<code>hasOwnProperty</code>来检查属性吧。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/09/hasOwnProperty/" data-id="cij66tq6w0000jb9khy4y8xu2" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/09/hasOwnProperty/" data-id="cij66uwsz000kl19k2u71qifi" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/09/hasOwnProperty/#disqus_thread" class="article-comment-link">Comments</a>
       
