@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>关于MongoDB上的aggregation framework的研究 | Shut up and keep coding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在刚开始接触mongoDb的时候我就常常纠结在生产环境中该不该用aggregation, 会不会有性能的问题、aggregation的用处是什么。今天我就稍微总结下。
+性能问题aggregation的性能问题主要集中在aggregation能不能像其他操作一样使用index，以及sort操作的时候会不会在memory中进行。事实上，里面有两个操作能够使用到index，分别是$match和$sort">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于MongoDB上的aggregation framework的研究">
+<meta property="og:url" content="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/index.html">
+<meta property="og:site_name" content="Shut up and keep coding">
+<meta property="og:description" content="在刚开始接触mongoDb的时候我就常常纠结在生产环境中该不该用aggregation, 会不会有性能的问题、aggregation的用处是什么。今天我就稍微总结下。
+性能问题aggregation的性能问题主要集中在aggregation能不能像其他操作一样使用index，以及sort操作的时候会不会在memory中进行。事实上，里面有两个操作能够使用到index，分别是$match和$sort">
+<meta property="og:updated_time" content="2016-01-08T21:00:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于MongoDB上的aggregation framework的研究">
+<meta name="twitter:description" content="在刚开始接触mongoDb的时候我就常常纠结在生产环境中该不该用aggregation, 会不会有性能的问题、aggregation的用处是什么。今天我就稍微总结下。
+性能问题aggregation的性能问题主要集中在aggregation能不能像其他操作一样使用index，以及sort操作的时候会不会在memory中进行。事实上，里面有两个操作能够使用到index，分别是$match和$sort">
+<meta name="twitter:creator" content="@https://twitter.com/hongbosb">
+<link rel="publisher" href="https://plus.google.com/114653038771687386034">
+<meta property="fb:app_id" content="https://www.facebook.com/profile.php?id=100005478555637">
+  
+    <link rel="alternative" href="/atom.xml" title="Shut up and keep coding" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Shut up and keep coding</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Android &amp;&amp; Node.js Developer</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/ufo22940268">Github</a>
+        
+          <a class="main-nav-link" href="/About-Me.html">About Me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://bettycc.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-mongoDb-aggregation-framework" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/02/mongoDb-aggregation-framework/" class="article-date">
+  <time datetime="2015-12-02T00:34:23.000Z" itemprop="datePublished">2015-12-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于MongoDB上的aggregation framework的研究
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在刚开始接触mongoDb的时候我就常常纠结在生产环境中该不该用aggregation, 会不会有性能的问题、aggregation的用处是什么。<br>今天我就稍微总结下。</p>
+<h2 id="性能问题">性能问题</h2><p>aggregation的性能问题主要集中在aggregation能不能像其他操作一样使用index，以及sort操作的时候会不会在memory中进行。<br>事实上，里面有两个操作能够使用到index，分别是$match和$sort。但是他们会有一些限制。</p>
+<h3 id="$match">$match</h3><p>$match操作只有在pipline的开始的地方出现，才能够使用index。</p>
+<p>举个栗子：</p>
+<ul>
+<li>Query0</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.foo.aggregate([</span><br><span class="line">&#123;$match: &#123;bar: <span class="number">1</span>&#125;&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Query1</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.foo.aggregate([</span><br><span class="line">&#123;$group: &#123;_id: $coo&#125;&#125;,</span><br><span class="line">&#123;$match: &#123;bar: <span class="number">1</span>&#125;&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>在上面两个查询中，只有Query0是能够使用到index的。Query1因为在match之前已经进行过一次group操作，所以match的输入已经不是原来的collection了，所以也就没法使用bar的index。</p>
+<h3 id="$sort">$sort</h3><p>$sort操作操作在$project, $unwind, $group这三个操作之前那么就可以使用index。换句话说，我们在使用的时候，应该尽可能吧$sort放在$limit和$match后面。</p>
+<h2 id="用途">用途</h2><p>aggregation诞生的主要目的为了分析用户数据。它可以利用pipline把用户数据的分析结果导出到一个collection里面，甚至你可以对导出的collection再次分析来得出新的结果(导出方法看<a href="https://docs.mongodb.org/manual/reference/operator/aggregation/out/" target="_blank" rel="external">这里</a>)。这样子就能够很有效地避免在分析的时候影响生产环境。<br>但是，通过上面关于性能的分析之后，我们可以得出其实aggregation可以用在其他对性能要求较高的领域。只要稍微注意操作符摆放的位置就可以了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/" data-id="cij66t0ky000hfn9kl233h26r" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongodb/">mongodb</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/21/speed-up-webstorm-debug/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          加快Webstorm调试速度
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/11/19/Jenkins上搭建Android构建环境/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Jenkins上搭建Android构建环境</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-Jenkins-Android/">CI Jenkins Android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CleanCode/">CleanCode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队分享/">团队分享</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-Jenkins-Android/" style="font-size: 10px;">CI Jenkins Android</a> <a href="/tags/CleanCode/" style="font-size: 20px;">CleanCode</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/团队分享/" style="font-size: 20px;">团队分享</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/01/09/hasOwnProperty/">javascript中的属性</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/07/prototype/">javascript中的原型链</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/05/promise-study/">关于Promise串行执行</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/21/speed-up-webstorm-debug/">加快Webstorm调试速度</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/02/mongoDb-aggregation-framework/">关于MongoDB上的aggregation framework的研究</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Frank Cheng<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/ufo22940268" class="mobile-nav-link">Github</a>
+  
+    <a href="/About-Me.html" class="mobile-nav-link">About Me</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'bettcc';
+  
+  var disqus_url = 'http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

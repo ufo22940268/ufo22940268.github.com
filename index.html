@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Shut up and keep coding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shut up and keep coding">
+<meta property="og:url" content="http://bettycc.com/index.html">
+<meta property="og:site_name" content="Shut up and keep coding">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shut up and keep coding">
+<meta name="twitter:description">
+<meta name="twitter:creator" content="@https://twitter.com/hongbosb">
+<link rel="publisher" href="https://plus.google.com/114653038771687386034">
+<meta property="fb:app_id" content="https://www.facebook.com/profile.php?id=100005478555637">
+  
+    <link rel="alternative" href="/atom.xml" title="Shut up and keep coding" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Shut up and keep coding</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Android &amp;&amp; Node.js Developer</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/ufo22940268">Github</a>
+        
+          <a class="main-nav-link" href="/About-Me.html">About Me</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://bettycc.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-hasOwnProperty" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/09/hasOwnProperty/" class="article-date">
+  <time datetime="2016-01-08T21:00:57.000Z" itemprop="datePublished">2016-01-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/09/hasOwnProperty/">javascript中的属性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>判断一个对象中是否有某个属性。有下面两种方法：</p>
+<ul>
+<li><code>in</code></li>
+<li><code>hasOwnProperty</code></li>
+</ul>
+<h3 id="in">in</h3><p><code>in</code>会检查对象自有属性和原型链中的属性。所以在使用<code>for..in</code>的时候需要特别注意，<strong>千万不要在不必要的时候遍历其原型链上的属性</strong>。</p>
+<pre><code><span class="keyword">var</span> triangle = {a:<span class="number">1</span>, b:<span class="number">2</span>, c:<span class="number">3</span>};
+
+<span class="function"><span class="keyword">function</span> <span class="title">ColoredTriangle</span>(<span class="params"></span>) </span>{
+  <span class="keyword">this</span>.color = <span class="string">"red"</span>;
+}
+
+ColoredTriangle.prototype = triangle;
+
+<span class="keyword">var</span> obj = <span class="keyword">new</span> ColoredTriangle();
+
+<span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> obj) {
+    <span class="built_in">console</span>.log(<span class="string">"obj."</span> + prop + <span class="string">" = "</span> + obj[prop]); 
+}
+
+<span class="comment">//Output: a: 1 b:2 c:3 color: red</span>
+</code></pre><h3 id="hasOwnProperty-NaN">hasOwnProperty</h3><p><code>hasOwnProperty</code>就如名字一样，他只会检查对象自己是否有这个属性。</p>
+<pre><code><span class="keyword">var</span> triangle = {a:<span class="number">1</span>, b:<span class="number">2</span>, c:<span class="number">3</span>};
+
+<span class="function"><span class="keyword">function</span> <span class="title">ColoredTriangle</span>(<span class="params"></span>) </span>{
+  <span class="keyword">this</span>.color = <span class="string">"red"</span>;
+}
+
+ColoredTriangle.prototype = triangle;
+
+<span class="keyword">var</span> obj = <span class="keyword">new</span> ColoredTriangle();
+
+<span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> obj) {
+    <span class="keyword">if</span> (obj.hasOwnProperty(prop)) {
+        <span class="built_in">console</span>.log(<span class="string">"obj."</span> + prop + <span class="string">" = "</span> + obj[prop]); 
+    }
+}
+
+<span class="comment">//Output: color: red</span>
+</code></pre><hr>
+<p>也许你会说，还有第三种方法<code>if (obj.a)</code>。<br>没错，很多人都这么用。但是其实这种用法非常糟糕，javascript里面的布尔转换本来就很容易引发bug。<br>比如：<br>    Boolean([]) //true<br>    Boolean({}) //true<br>    Boolean(0) //false<br>    Boolean(1) //true</p>
+<p>所以还是不要偷懒，用<code>in</code>和<code>hasOwnProperty</code>来检查属性吧。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/01/09/hasOwnProperty/" data-id="cij66tq6w0000jb9khy4y8xu2" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/01/09/hasOwnProperty/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-prototype" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/07/prototype/" class="article-date">
+  <time datetime="2016-01-07T09:21:36.000Z" itemprop="datePublished">2016-01-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/07/prototype/">javascript中的原型链</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天来总结下javascript中的原型。</p>
+<h2 id="继承">继承</h2><h3 id="方式一">方式一</h3><pre><code>util.<span class="function"><span class="title">inherits</span><span class="params">(Class, SuperClass)</span></span>
+</code></pre><p>node官方推荐的集成机制。</p>
+<h3 id="方式二">方式二</h3><pre><code><span class="function"><span class="keyword">function</span> <span class="title">Mamal</span><span class="params">()</span> <span class="comment">{}</span>
+<span class="title">Mamal</span>.<span class="title">prototype</span> = <span class="title">Object</span>.<span class="title">create</span><span class="params">(Animal.prototype)</span>;</span> <span class="comment">// 或者 new Animal()</span>
+Mamal.prototype.contructor = Mamal
+</code></pre><p>这里需要注意，<code>Mamal.prototype.contructor = Mamal</code>对集成并没有什么影响。只是单纯地保持对父类的一个引用。</p>
+<h3 id="构造方法">构造方法</h3><p>上面两种方法只继承了原型链，如果你希望集成<em>构造方法</em>的话,还需要加上下面代码：</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">Mamal</span>(<span class="params"></span>) </span>{
+    Animal.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+}
+</code></pre><p>如果你是用<em>方法一</em>进行集成的话，那么你还可以这么写，因为<code>inherits</code>会自动把父类的构造方法赋值给<code>_super</code></p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">Mamal</span>(<span class="params"></span>) </span>{
+    Mamal._super.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+}
+</code></pre><h2 id="理解原型链">理解原型链</h2><p>javascript的object里面有一个保存着一个属性<code>__prop__</code>。这个属性指向了父类的原型。  需要注意的是，<code>__prop__</code>仅仅为了方便我们理解原型链而存在，在生产环境中不建议使用。</p>
+<p>你可以通过<a href="https://github.com/norfish/blog/wiki/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JavaScrip%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF" target="_blank" rel="external">norfish</a>的代码理解</p>
+<pre><code><span class="comment">// 声明 Animal 对象构造器</span>
+<span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params">name</span>) </span>{ 
+   <span class="keyword">this</span>.name = name;
+} 
+<span class="comment">// 将 Animal 的 prototype 属性指向一个对象，</span>
+<span class="comment">// 亦可直接理解为指定 Animal 对象的原型</span>
+Animal.prototype = {
+   weight: <span class="number">0</span>, 
+   eat: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{ 
+       alert( <span class="string">"Animal is eating!"</span> ); 
+   } 
+}
+<span class="comment">// 声明 Mammal 对象构造器</span>
+<span class="function"><span class="keyword">function</span> <span class="title">Mammal</span>(<span class="params"></span>) </span>{ 
+   <span class="keyword">this</span>.name = <span class="string">"mammal"</span>; 
+} 
+<span class="comment">// 指定 Mammal 对象的原型为一个 Animal 对象。</span>
+<span class="comment">// 实际上此处便是在创建 Mammal 对象和 Animal 对象之间的原型链</span>
+Mammal.prototype = <span class="keyword">new</span> Animal(<span class="string">"animal"</span>); 
+<span class="comment">// 声明 Horse 对象构造器</span>
+<span class="function"><span class="keyword">function</span> <span class="title">Horse</span>(<span class="params"> height, weight </span>) </span>{ 
+   <span class="keyword">this</span>.name = <span class="string">"horse"</span>; 
+   <span class="keyword">this</span>.height = height; 
+   <span class="keyword">this</span>.weight = weight; 
+}
+<span class="comment">// 将 Horse 对象的原型指定为一个 Mamal 对象，继续构建 Horse 与 Mammal 之间的原型链</span>
+Horse.prototype = <span class="keyword">new</span> Mammal(); 
+<span class="comment">// 重新指定 eat 方法 , 此方法将覆盖从 Animal 原型继承过来的 eat 方法</span>
+Horse.prototype.eat = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{ 
+   alert( <span class="string">"Horse is eating grass!"</span> ); 
+}
+<span class="comment">// 验证并理解原型链</span>
+<span class="keyword">var</span> horse = <span class="keyword">new</span> Horse( <span class="number">100</span>, <span class="number">300</span> ); 
+<span class="built_in">console</span>.log( horse.__proto__ === Horse.prototype ); 
+<span class="built_in">console</span>.log( Horse.prototype.__proto__ === Mammal.prototype ); 
+<span class="built_in">console</span>.log( Mammal.prototype.__proto__ === Animal.prototype ); 
+<span class="comment">//原型链</span>
+Horse--&gt;Mammal的实例
+Mammal--&gt;Animal的实例
+Animal --&gt;<span class="built_in">Object</span>.prototype
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/01/07/prototype/" data-id="cij66t0kq000afn9koardp8e4" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/01/07/prototype/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-promise-study" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/05/promise-study/" class="article-date">
+  <time datetime="2016-01-05T07:07:13.000Z" itemprop="datePublished">2016-01-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/05/promise-study/">关于Promise串行执行</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>为了避免<code>Callback hell</code>, 我在很早的时候就开始用<code>Promise</code>。因为现在开发主要还是在es5下进行，所以我选择了一个第三方的Promise实现: <a href="bluebirdjs.com/docs/getting-started.html">bluebird</a>。</p>
+<p>其他用下来都还好，基本上<a href="https://github.com/caolan/async" target="_blank" rel="external">async</a>下能完成的任务，bluebird也能比较出色地完成，直到我在做串行执行任务的时候才碰到了问题。</p>
+<p>在做网页抓取的时候，我用了bluebird中的<a href="http://bluebirdjs.com/docs/api/promise.props.html" target="_blank" rel="external">props</a>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> pageParser.html(url, &#123;encoding: <span class="string">'gbk'</span>&#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> (<span class="params">$</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.props(&#123;</span><br><span class="line">      title: itemParser.getTitle($),</span><br><span class="line">      markdown: itemParser.getMarkdown($, itemParser.getDescLink),</span><br><span class="line">      purchaseLink: url,</span><br><span class="line">      img: fixImageUrl($(<span class="string">'#J_ImgBooth'</span>).attr(<span class="string">'src'</span>)),</span><br><span class="line">      gallery: itemParser.getGallery($).map(fixImageUrl),</span><br><span class="line">      price: itemParser.getPrice($, url),</span><br><span class="line">      originalPrice: itemParser.getOriginalPrice($),</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>其中<code>itemParser</code>中的, <code>getPrice</code>和<code>getGallery</code>方法返回的都是Promise。</p>
+<p>这样子写，代码看起来挺好的，除了一个问题,我没办法让<code>props</code>串行执行。原因是因为Promise在构建的时候其实就已经开始执行方法体里面的代码了，具体细节可以看<a href="https://github.com/petkaantonov/bluebird/blob/master/src/debuggability.js#L182" target="_blank" rel="external">debuggability</a>。</p>
+<p>那么这是不是意味着我们永远都没法在Promise里面串行执行了吗？当然不是。<br>bluebird提供了下面四个方法支持了串行执行:</p>
+<ul>
+<li><strong>map</strong> 需要执行concurrency为1</li>
+<li><strong>mapSeries</strong></li>
+<li><strong>each</strong></li>
+<li><strong>reduce</strong></li>
+</ul>
+<p>例子如下:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">Promise</span> = <span class="built_in">require</span>(<span class="string">'bluebird'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> funcs = <span class="built_in">Promise</span>.resolve([<span class="number">500</span>, <span class="number">100</span>, <span class="number">400</span>, <span class="number">200</span>].map((n) =&gt; makeWait(n)));</span><br><span class="line"></span><br><span class="line">funcs</span><br><span class="line">  .mapSeries(iterator)  <span class="comment">// logs: 500, 100, 400, 200</span></span><br><span class="line">  .then(<span class="built_in">console</span>.log)    <span class="comment">// logs: [500, 100, 400, 200]</span></span><br><span class="line"></span><br><span class="line">funcs</span><br><span class="line">  .map(iterator, &#123;concurrency: <span class="number">1</span>&#125;)       <span class="comment">// logs: 500, 100, 400, 200</span></span><br><span class="line">  .then(<span class="built_in">console</span>.log)    <span class="comment">// logs: [500, 100, 400, 200]</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">iterator</span>(<span class="params">f</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> f()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeWait</span>(<span class="params">time</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>((resolve, reject) =&gt; &#123;</span><br><span class="line">      setTimeout(() =&gt; &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(time);</span><br><span class="line">        resolve(time);</span><br><span class="line">      &#125;, time);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<p>这里非常需要注意的一点是，<code>map</code>只有在处理<code>handler</code>返回的<code>Promise</code>的时候<code>concurrency</code>才会生效。<br>比如说下面这段代码是不会串行执行的:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.map([makeWait(<span class="number">1000</span>)(), makeWait(<span class="number">1000</span>)()], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/01/05/promise-study/" data-id="cij66t0kt000dfn9kzg8488jq" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/01/05/promise-study/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-speed-up-webstorm-debug" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/21/speed-up-webstorm-debug/" class="article-date">
+  <time datetime="2015-12-21T08:44:22.000Z" itemprop="datePublished">2015-12-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/21/speed-up-webstorm-debug/">加快Webstorm调试速度</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>你是不是已经受不了Webstorm屎一样的调试速度了。我用rmbp13’, 发现开始调试需要几十秒时间。然后我想，也许是rmbp太慢了，然后换成imac5k, 结果发现还是一样慢。</p>
+<p>不过我今天发现解决方案了。</p>
+<p>你只需要在Webstorm里面的按<code>cmd+shift+a</code>, 在弹出的对话框中输入<code>Registry</code>, 进入注册表修改界面。然后往下找到<code>js.debugger.v8.use.any.breakpoint</code>, 然后禁它丫的。然后这时候你就会发现webstorm的调试速度和正常运行速度一样了！</p>
+<hr>
+<p>最后贴上我找到解决方案的<a href="https://github.com/nodejs/node-v0.x-archive/issues/9125" target="_blank" rel="external">链接</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2015/12/21/speed-up-webstorm-debug/" data-id="cij66t0ko0009fn9k4rmcqofj" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2015/12/21/speed-up-webstorm-debug/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-mongoDb-aggregation-framework" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/02/mongoDb-aggregation-framework/" class="article-date">
+  <time datetime="2015-12-02T00:34:23.000Z" itemprop="datePublished">2015-12-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/02/mongoDb-aggregation-framework/">关于MongoDB上的aggregation framework的研究</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在刚开始接触mongoDb的时候我就常常纠结在生产环境中该不该用aggregation, 会不会有性能的问题、aggregation的用处是什么。<br>今天我就稍微总结下。</p>
+<h2 id="性能问题">性能问题</h2><p>aggregation的性能问题主要集中在aggregation能不能像其他操作一样使用index，以及sort操作的时候会不会在memory中进行。<br>事实上，里面有两个操作能够使用到index，分别是$match和$sort。但是他们会有一些限制。</p>
+<h3 id="$match">$match</h3><p>$match操作只有在pipline的开始的地方出现，才能够使用index。</p>
+<p>举个栗子：</p>
+<ul>
+<li>Query0</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.foo.aggregate([</span><br><span class="line">&#123;$match: &#123;bar: <span class="number">1</span>&#125;&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Query1</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">db.foo.aggregate([</span><br><span class="line">&#123;$group: &#123;_id: $coo&#125;&#125;,</span><br><span class="line">&#123;$match: &#123;bar: <span class="number">1</span>&#125;&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>在上面两个查询中，只有Query0是能够使用到index的。Query1因为在match之前已经进行过一次group操作，所以match的输入已经不是原来的collection了，所以也就没法使用bar的index。</p>
+<h3 id="$sort">$sort</h3><p>$sort操作操作在$project, $unwind, $group这三个操作之前那么就可以使用index。换句话说，我们在使用的时候，应该尽可能吧$sort放在$limit和$match后面。</p>
+<h2 id="用途">用途</h2><p>aggregation诞生的主要目的为了分析用户数据。它可以利用pipline把用户数据的分析结果导出到一个collection里面，甚至你可以对导出的collection再次分析来得出新的结果(导出方法看<a href="https://docs.mongodb.org/manual/reference/operator/aggregation/out/" target="_blank" rel="external">这里</a>)。这样子就能够很有效地避免在分析的时候影响生产环境。<br>但是，通过上面关于性能的分析之后，我们可以得出其实aggregation可以用在其他对性能要求较高的领域。只要稍微注意操作符摆放的位置就可以了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/" data-id="cij66t0ky000hfn9kl233h26r" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mongodb/">mongodb</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Jenkins上搭建Android构建环境" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/11/19/Jenkins上搭建Android构建环境/" class="article-date">
+  <time datetime="2015-11-19T00:28:45.000Z" itemprop="datePublished">2015-11-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/19/Jenkins上搭建Android构建环境/">Jenkins上搭建Android构建环境</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>每天要打包给别人看实在太麻烦，所以就用jenkins搭了一个Android CI系统。可以用来跑测试用例，可以用来编译项目，然后把生成的包发到相关人员那里去。以后产品上线了，还可以编译各种渠道包。</p>
+<h2 id="搭建流程">搭建流程</h2><h3 id="搭建jenkins">搭建jenkins</h3><p>搭建方法看<a href="https://jenkins-ci.org/" target="_blank" rel="external">这里</a>, 可以按照官网的做，也可以求省心下一个docker一次搞定。</p>
+<h3 id="在服务器上搭建android构建环境">在服务器上搭建android构建环境</h3><p>首先说明一点，我是使用gradle的方式来打包的，如果你们是用ant或者maven来打包，那么这个教程并不适合你。</p>
+<ul>
+<li><strong>下载 android sdk</strong></li>
+</ul>
+<p>从<a href="http://www.android.com/" target="_blank" rel="external">android官网</a>上下载sdk的zip包, 然后解压到服务器上。</p>
+<p>然后执行：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android update sdk --no-ui</span><br></pre></td></tr></table></figure>
+<p>来下载所有sdk相关的信息。</p>
+<p>如果你的服务器在国内，那么这个下载过程可能会被墙，这时候你需要在本地搭建一个http代理。因为我只有shadowsocks，所以我通过shadowsocks+privoxy的方式来搭建。<br>假如说你的代理的端口是8118（privoxy的默认端口就是这个）, 那么你就可以通过执行下面的命令来使用代理</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android update sdk --no-ui --proxy-host 127.0.0.1 --proxy-port 8118</span><br></pre></td></tr></table></figure>
+<p>过了很久之后，这时候你的sdk就搭建好了。但是如果你的服务器用的64位的，这时候你应该会碰到aapt没法执行的问题。原因是aapt需要对应的32位的库才能运行。这时候你需要去网上搜怎么在你对应的平台下安装zlib库。</p>
+<ul>
+<li><strong>安装gradle</strong></li>
+</ul>
+<p>这里需要强调一点，我在网上发现了JakeWarthon大神一个牛逼的<a href="https://github.com/JakeWharton/sdk-manager-plugin" target="_blank" rel="external">项目</a>，可以帮你下载gradle中缺少的一些系统级的依赖。应该能够给你在搭建gradle环境中减少不少时间。</p>
+<h3 id="配置jenkins">配置jenkins</h3><ul>
+<li><strong>创建项目</strong></li>
+</ul>
+<p>和一般项目一样，创建一个<code>自由软件风格</code>的项目，然后在构建选项里面输入你的构建命令， 比如我就是<code>gradle assembleProductionDebug</code>。</p>
+<ul>
+<li><strong>配置webhook</strong></li>
+</ul>
+<p>如果你需要在你有代码push的时候就执行构建，那么在项目的webhook那一栏输入一个自定义的token。同时这时候jenkins会给你一个url, 你把这个url填入到github或者gitlab的webhook里面去，然后你每次push代码，服务器就能够自动执行构建了。</p>
+<ul>
+<li><strong>电子邮件</strong></li>
+</ul>
+<p>在编译完成之后，我们希望把生成的apk发送到别人的邮箱里面。这时候需要安装Ext-Email plugin， 然后在plugin的attachment里面填上生成apk文件的地址。<br>如果你还希望把你的修改日志也发送在邮件里面，那么可以在content里面加上下面这一段:</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">修改日志:</span><br><span class="line">$&#123;CHANGES, showPaths=true, format=<span class="string">"%a: %r %p \n--\"</span><span class="decorator">%m</span>\<span class="string">""</span>, pathFormat=<span class="string">"\n\t- %p"</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$DEFAULT</span>_PRESEND_SCRIPT</span><br></pre></td></tr></table></figure>
+<h2 id="最终效果">最终效果</h2><p>下面就是最终用户收到的邮件：</p>
+<p><img src="/QQ20151119-0@2x.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2015/11/19/Jenkins上搭建Android构建环境/" data-id="cij66t0l4000nfn9kkfzh1frp" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2015/11/19/Jenkins上搭建Android构建环境/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CI-Jenkins-Android/">CI Jenkins Android</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-S-O-L-I-D之开闭原则" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/11/06/S-O-L-I-D之开闭原则/" class="article-date">
+  <time datetime="2015-11-06T03:26:04.000Z" itemprop="datePublished">2015-11-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/06/S-O-L-I-D之开闭原则/">S.O.L.I.D之开闭原则</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="开闭原则">开闭原则</h2><h3 id="什么是开闭原则">什么是开闭原则</h3><p><code>在面向对象编程领域中，开闭原则规定“软件中的对象（类，模块，函数等等）应该对于扩展是开放的，但是对于修改是封闭的”</code></p>
+<p>换句话说，开闭原则做了一件很神器的事情：在我们对软件功能修改的时候, 并没有对原来的类进行修改，但是确实对软件的功能进行了修改。</p>
+<h3 id="如何做到开闭">如何做到开闭</h3><p><strong>模板方法</strong></p>
+<p>在android里面所有的视图类都集成于View。</p>
+<p>View的结构如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//code</span></span><br><span class="line">        onDraw(canvas);</span><br><span class="line">        <span class="comment">//code</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这时候你就可以继承View，来绘制你所需要的图形。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">        drawTriangle();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>装饰者模式</strong></p>
+<p>java中的io类。</p>
+<p>如果你需要对一个InputStream加上从文件读取的功能，那么就用FileInputStream进行包装</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InputStream stream = <span class="keyword">new</span> InputStream()</span><br><span class="line">FileInputStream fis = <span class="keyword">new</span> FileInputStream(stream);</span><br></pre></td></tr></table></figure>
+<p>inputStream的代码逻辑没有被改写，但是你现在获取到了新的，对文件操作的能力。</p>
+<h3 id="开闭原则的好处">开闭原则的好处</h3><p>更好的保证了类的内聚，在修改代码之后不需要对类进行重新编译。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2015/11/06/S-O-L-I-D之开闭原则/" data-id="cij66t0l1000kfn9k1rkvp1um" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2015/11/06/S-O-L-I-D之开闭原则/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CleanCode/">CleanCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/团队分享/">团队分享</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-解决jenkins没法发送邮件到gmail的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" class="article-date">
+  <time datetime="2015-11-05T06:59:50.000Z" itemprop="datePublished">2015-11-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/05/解决jenkins没法发送邮件到gmail的问题/">解决jenkins没法发送邮件到gmail的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间搞了个jenkins服务器跑测试用例，但是很奇怪的事情是用它自带的smtp服务器进行发送不够稳定，而且不能发送到gmail（<del>原因未知</del>）。</p>
+<p>就这样忍受了好长一段时间之后我终于受不了了，然后放狗去google上搜了一圈，然后折腾了一下终于找到解决方法如下：</p>
+<h3 id="设置Admin_Email_Address">设置Admin Email Address</h3><p>设置的地方在， 系统管理 -&gt; 系统设置 -&gt; Jenkins Location ， 如下图</p>
+<p><img src="/QQ20151105-0@2x.png" alt=""></p>
+<p>地址填写你的smtp服务器对应的邮件账号的地址</p>
+<h3 id="配置smtp服务器">配置smtp服务器</h3><p>还是在系统设置界面，最下面配置。smtp服务器的配置方法可以去你对应的电子邮件提供商的官网查。</p>
+<p><strong>如果是qq这种垃圾邮箱的话，还要在设置里面开启smtp权限</strong></p>
+<p><img src="/QQ20151105-3@2x.png" alt=""></p>
+<p><img src="/QQ20151105-4@2x.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" data-id="cij66t0ke0001fn9k9rcfnz6s" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CI/">CI</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-mongoose中populate" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/11/05/mongoose中populate/" class="article-date">
+  <time datetime="2015-11-05T02:50:51.000Z" itemprop="datePublished">2015-11-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/05/mongoose中populate/">mongoose中populate</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前一直很想不通mongoose里面的populate到底做了什么事情，然后用populate和自己手动<code>findById</code>有什么区别。因为mongodb里面没有join，我一直希望populate能够带来效率上的提升。</p>
+<h3 id="Populate源码">Populate源码</h3><p>地址在<a href="https://github.com/Automattic/mongoose/blob/c76effbf2c9a6f7f1e6e7cc359a1b7d04a526e14/lib/model.js#L2264" target="_blank" rel="external">这里</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  mod.Model.find(match, select, mod.options.options, next.bind(<span class="keyword">this</span>, mod.options, assignmentOpts));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">options, assignmentOpts, err, valsFromDb</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">return</span> promise.resolve(err);</span><br><span class="line">  vals = vals.concat(valsFromDb);</span><br><span class="line">  <span class="keyword">if</span> (--_remaining === <span class="number">0</span>) &#123;</span><br><span class="line">    promise.resolve(err, vals, options, assignmentOpts);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们就看最后的这几行。</p>
+<p>从方法体上，我们可以看到pouplate是通过<code>cb</code>来进行回调的。但是，由于中间用了promise对<code>cb</code>进行了一次封装，所以最终的回调发生在next函数中的<code>promise.resolve(err, vals, options, assignmentOpts);</code></p>
+<p>这样子，问题就变得简单了。populate的实现过程是，首先组件好对待populate的信息的查询和排序操作，然后用<code>mod.Model.find</code>进行第一次查询，查询成功之后，next方法会被调用到，然后实现数据的填充。</p>
+<h2 id="结论">结论</h2><p>populate也就是普通的对每个条目的查询，效率和手动查询，然后再在替换并没有提升。所以以后大家在对mongoose populate和手动populate进行选择的时候就不用纠结了啊。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2015/11/05/mongoose中populate/" data-id="cij66t0kw000efn9k8krcc9fv" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2015/11/05/mongoose中populate/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node-js/">Node.js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-teamshare-SRP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/10/30/teamshare-SRP/" class="article-date">
+  <time datetime="2015-10-30T03:56:45.000Z" itemprop="datePublished">2015-10-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/30/teamshare-SRP/">teamshare-SRP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SRP">SRP</h1><p>SRP is short for single responsible principle. It decribes when we build software, we should make class have only one reason to change. When achived this, it will help us to seprete concern. It doesn’t mean a method should do only one thing, but only have one reason to change.</p>
+<h3 id="Code_example">Code example</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;@implement Rectangle &#10;- (void) draw&#10;&#123;&#10;    code&#10;&#125;&#10;&#10;- (CGFloat)area&#10;&#123;&#10;    code&#10;&#125;&#10;@end</span><br></pre></td></tr></table></figure>
+<p>If we change the draw style, the <code>Rectangle</code> will be changed. If area calculating algorithm changes, it also will be changed.</p>
+<p>Better design:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@implement Rectangle&#10;- (void) draw&#10;&#123;&#10;    code&#10;&#125;&#10;@end&#10;&#10;@implent GeometricRectangle&#10;+ (CGFloat)area:(Rectangle *)rect&#10;&#123;&#10;    code&#10;&#125;&#10;@end</span><br></pre></td></tr></table></figure>
+<h3 id="What_is_responsibility">What is responsibility</h3><p>Motive for changing a class. If you can think of more than one motive for changing a class, then that class has more than one responsibilty.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@interface Modem&#10;&#123;&#10;    - (void)dial:(NSString)number;&#10;    - (void)hangup;&#10;    - (void)send:(NSString)singleCharacter;&#10;    - (void)recv;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>We can sperate it into two category. One is connection. So dial and hangup belows to this category. The other is data communication. It contains send and recv.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2015/10/30/teamshare-SRP/" data-id="cij66t0kl0004fn9kxh24yj6m" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2015/10/30/teamshare-SRP/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CleanCode/">CleanCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/团队分享/">团队分享</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-Jenkins-Android/">CI Jenkins Android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CleanCode/">CleanCode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队分享/">团队分享</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-Jenkins-Android/" style="font-size: 10px;">CI Jenkins Android</a> <a href="/tags/CleanCode/" style="font-size: 20px;">CleanCode</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/团队分享/" style="font-size: 20px;">团队分享</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/01/09/hasOwnProperty/">javascript中的属性</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/07/prototype/">javascript中的原型链</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/05/promise-study/">关于Promise串行执行</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/21/speed-up-webstorm-debug/">加快Webstorm调试速度</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/02/mongoDb-aggregation-framework/">关于MongoDB上的aggregation framework的研究</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Frank Cheng<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/ufo22940268" class="mobile-nav-link">Github</a>
+  
+    <a href="/About-Me.html" class="mobile-nav-link">About Me</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'bettcc';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
