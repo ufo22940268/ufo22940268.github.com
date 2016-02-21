@@ -54,8 +54,6 @@
         
           <a class="main-nav-link" href="https://github.com/ufo22940268">Github</a>
         
-          <a class="main-nav-link" href="/About-Me.html">About Me</a>
-        
       </nav>
       <nav id="sub-nav">
         
@@ -71,6 +69,288 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-reacterize-admin" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/21/reacterize-admin/" class="article-date">
+  <time datetime="2016-02-21T13:58:59.000Z" itemprop="datePublished">2016-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/21/reacterize-admin/">前端动态化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前做了了一个管理后台,用的还是那些老掉牙的bootstrap+jquery.交互方式还是以静态的为主,随便改个数据就全局刷新.感觉很 low,不过想想也就我们公司的内部人员用的,所以丑一点也无所谓, <code>稳定压倒一切嘛</code><br>直到后面,我发现了这种开发模型的有下面几个弊端</p>
+<ul>
+<li><strong>复用度不够</strong> 比如说我们在界面A上开发了一个组件,要在 B上用,就很不方便.</li>
+<li><strong>全局 CSS</strong> 可能因为我在移动开发的时候的观念先入为主了,所以我对那种把所有的 css 文件都放在一个<code>main.css</code>里面,然后用各种 prefix, postfix 命名来区分不同区域的class 做法总是难以接受.</li>
+</ul>
+<p>直到上周末,我们业务发生修改.我想,是时候给前端加一些高级特性了,然后就开始重写整个前端框架.</p>
+<p>#引入 React</p>
+<p>没有错,react 一直是我比较喜欢的技术.它在处理前端模块化的时候能起到非常不错的作用.关于 react 基本用法,这里就不说了(<del>我也许懂得和你差不多</del>).但是这里要着重强调下一个超级牛逼的liverload的<a href="https://gaearon.github.io/react-hot-loader/getstarted/" target="_blank" rel="external">解决方案</a>,这个解决方案能够避免传统 livereload 的一些 side effect,比如说有的时候文件修改了但是网页没有刷新呀, 重新加载有延迟之类的.</p>
+<p>#引入 React router</p>
+<p>有人说</p>
+<blockquote>
+<p>react是一款很好的开发框架,但是它却没有一个原生的 router.</p>
+</blockquote>
+<p>于是就有了<a href="https://github.com/reactjs/react-router" target="_blank" rel="external">react-router</a>. 他的做法是通过把后端的 router 转到前端来,从而达到更多的前端代码复用,同事也加快了跳转速度.因为通过 router 跳转,其实仅仅只是替换了Dom tree而已.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(</span><br><span class="line">  (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="title">Router</span> <span class="attribute">history</span>=<span class="value">&#123;reactRouter.browserHistory&#125;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">Route</span> <span class="attribute">path</span>=<span class="value">"/login"</span> <span class="attribute">component</span>=<span class="value">&#123;Login&#125;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">Route</span> <span class="attribute">path</span>=<span class="value">"/"</span> <span class="attribute">component</span>=<span class="value">&#123;App&#125;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">IndexRoute</span> <span class="attribute">component</span>=<span class="value">&#123;ReviewList&#125;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">Route</span> <span class="attribute">path</span>=<span class="value">"review/list"</span> <span class="attribute">component</span>=<span class="value">&#123;ReviewList&#125;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">Route</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">Router</span>&gt;</span></span><br><span class="line">  )</span>,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'container'</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>看起啦大概是这样子. 但是你可能会困惑,前端路由是怎么保证连接的永久有效呢?<br>要做到连接的永久有效,必然需要后端和前端配合起来进行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'*'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">  response.render(<span class="string">'newIndex'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>加上这个路由之后,就能够保证每次请求,都能够用同一个前端路由进行处理,这样子就保证了地址的永久有效.</p>
+<p>#引入 webpack </p>
+<p>webpack确实是特别帅的模块化工具.各种 loader 把css, json, jsx都转换成 javascript 进行加载.<br>所以这之后,你在 javascript 代码里面就能通过这种方式引入 css 文件了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> css <span class="keyword">from</span> <span class="string">'css/reviewList.css'</span>;</span><br></pre></td></tr></table></figure>
+<p>是不是很酷!更酷的事情是,你如果启用了<code>css-loader</code>中的 <a href="https://github.com/webpack/css-loader#local-scope" target="_blank" rel="external">module 功能</a>,你还能生成局部的 css 命名文件,再也不用担心元素命名冲突了.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/02/21/reacterize-admin/" data-id="cikwnff69000dqc9kcd4imbvo" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/02/21/reacterize-admin/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react-webpack-front-end/">react webpack front-end</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-need-to-RTFM" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/17/need-to-RTFM/" class="article-date">
+  <time datetime="2016-02-17T00:00:08.000Z" itemprop="datePublished">2016-02-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/17/need-to-RTFM/">论RTFM的重要性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>伟大的软件工程师<a href="https://github.com/stormslowly" target="_blank" rel="external">stormslowly</a>曾经说过</p>
+<blockquote>
+<p>80%的编程问题能通过看文档解决</p>
+</blockquote>
+<p>可是我已经在码农这条路上走了5年了,前天还是因为没有仔细看文档,在mongodb的replica的配置上卡了一个上午.  我本来以为我是一个老司机,可以不用仔细看文档,但是太天真了,<code>too naive</code>.</p>
+<h2 id="之前的错误">之前的错误</h2><ul>
+<li><p>看文档只看自己认为有用的部分,然后就开始实践.</p>
+<ul>
+<li><strong>解决方案</strong> 对于任何新技术,都需要全篇<em>浏览</em>文档,明白总体的架构.不求掌握每个细节,但是要对基础架构有个总体了解,然后再开始操作.因为事先对总体架构有一个了解,那么在实现的过程中碰到问题,也就不会没有头绪,到google上搜索起来也会更加有目的性.</li>
+</ul>
+</li>
+<li><p>碰到问题,急于google</p>
+<ul>
+<li><strong>问题分析</strong> google看起来是解决问题的最直接,简单的方案.但是这不易于自己对架构的理解.</li>
+<li><p><strong>解决方案</strong> 碰到问题应该按照下面顺序来解决</p>
+<ol>
+<li>搜索文档</li>
+<li>Google 搜索</li>
+<li><p>问人</p>
+<p>如果这个流程走完了,问题还没有解决.那么再次从a开始循环.</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/02/17/need-to-RTFM/" data-id="cikwnff6q000kqc9ktu3js9uu" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/02/17/need-to-RTFM/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jenkins-master-slave" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/16/jenkins-master-slave/" class="article-date">
+  <time datetime="2016-02-16T03:15:43.000Z" itemprop="datePublished">2016-02-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/16/jenkins-master-slave/">Jenkins分布式部署</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Jenkins其实自带分布式特性.他的分布式是<code>Master/Slave</code>的模型.在<code>Master</code>上分配任务,然后在<code>Slave</code>或者<code>Master</code>上完成.</p>
+<h2 id="作用">作用</h2><p>这个特性带来两个好处</p>
+<ul>
+<li>能够有效分单主节点上的压力,加快构建速度.</li>
+<li>能够制定特定的任务在特定的主机上进行.</li>
+</ul>
+<p>接下来我着重说下第二特性</p>
+<p>比如说我们现在有一个情景,服务器的类型分为: <code>抓取服务器</code>, <code>应用服务器</code>, <code>Jenkins服务器</code>.<br>这时候,我们需要创建一个Jenkins的任务来完成定期的抓取工作,这时候如果我们在<code>Jenkins服务器</code>上创建,那么创建的任务只能够在本地运行.</p>
+<p>这时候分布式的优点就体现出来了. 你可以按照下面的流程操作</p>
+<h3 id="添加ssh秘钥">添加ssh秘钥</h3><p>保证Jenkins服务器能够通过ssh连接到抓取服务器.<br>在jenkins服务器上执行</p>
+<pre><code>ssh-<span class="keyword">copy</span>-<span class="property">id</span> user@scraping-server-adddress.com
+</code></pre><h3 id="创建节点">创建节点</h3><p>进入<code>Jenkins服务器</code>后台, 然后<code>管理节点</code>-<code>创建节点</code>, 勾选<code>Dumb Server</code>(<del>不勾选不让创建,具体信息可以在下一步填写</del>).输入<code>抓取服务器</code>的地址,在<code>启动方法</code>中选择<code>Launch slave agents on Unix machines via SSH</code>.然后保存.</p>
+<h3 id="创建任务">创建任务</h3><p>按照普通的创建任务的方法创建一个Jenkins任务, 但是在<code>Restrict where this project can be run</code>中输入刚刚创建的节点的名字.</p>
+<h3 id="运行任务">运行任务</h3><p>点击构建任务.这时候你的任务应该只在<code>抓取服务器中运行</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/02/16/jenkins-master-slave/" data-id="cikwnff72000rqc9kswfthkxi" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/02/16/jenkins-master-slave/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jenkins/">Jenkins</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-bitbar" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/19/bitbar/" class="article-date">
+  <time datetime="2016-01-19T06:35:08.000Z" itemprop="datePublished">2016-01-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/19/bitbar/">实时监控项目集成情况</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先上个图</p>
+<p><img src="http://ww1.sinaimg.cn/large/3f6e95acgw1f04spl2659j20j402o3yn.jpg" alt=""></p>
+<p>没错，就是上图中的蓝色的点。它表示了项目的集成状态。<br>分别是:</p>
+<ul>
+<li><em>红色</em> 项目集成失败</li>
+<li><em>蓝色</em> 集成成功</li>
+<li><em>绿色</em> 正在集成</li>
+</ul>
+<p>有了这货，我就能够很轻松地知道现在项目的状态了，再也不需要常常打开<code>jenkins</code>来查看了。</p>
+<h2 id="Github"><a href="https://github.com/ufo22940268/jenkins-bitbar" target="_blank" rel="external">Github</a></h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/01/19/bitbar/" data-id="cikwnff7a000vqc9kd1qh0nlh" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/01/19/bitbar/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jenkins-Bitbar/">Jenkins Bitbar</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-upgrade-node" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/14/upgrade-node/" class="article-date">
+  <time datetime="2016-01-14T02:23:30.000Z" itemprop="datePublished">2016-01-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/14/upgrade-node/">Node升级到4.0</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>看到各种开源项目都纷纷用上了<code>es6</code>，包括<code>express</code>, <code>mongoose</code>等等。我感觉也是时候升级公司的项目了。</p>
+<h2 id="升级Node">升级Node</h2><p>直接使用TJ大神的<a href="https://www.npmjs.com/package/n" target="_blank" rel="external">n</a>来安装node。  </p>
+<ul>
+<li><p>如果你想升级到最新的stable的版本</p>
+<pre><code>n <span class="preprocessor">stable</span> 
+</code></pre></li>
+<li><p>如果你只是想升级到LTS</p>
+<pre><code>n <span class="number">4.2</span><span class="number">.4</span>
+</code></pre></li>
+</ul>
+<h2 id="碰到依赖问题">碰到依赖问题</h2><p>我碰到的是<code>to-markdown</code>不能正常<code>install</code>,  报的是<code>gyp-build</code>的错。</p>
+<h3 id="解决方案一">解决方案一</h3><p>放狗去网上搜了一圈之后，发现<a href="https://github.com/mafintosh/node-gyp-install" target="_blank" rel="external">node-gyp-install</a>这个库能够解决这个问题。然后按照<code>README</code>操作一番，mac上能够正常跑过所有测试用例了。<br>但是很遗憾，在服务器上的<code>CentOS</code>上还是没法正常install。</p>
+<h3 id="解决方案二">解决方案二</h3><p>看了下<code>to-markdown</code>的文档，发现其<strong>v2.0</strong>版本能够支持<code>node 4</code>。然后升级完成之后服务器上的问题也解决了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/01/14/upgrade-node/" data-id="cikwnff5z0004qc9k4l00cqfd" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/01/14/upgrade-node/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-hasOwnProperty" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -144,7 +424,7 @@ ColoredTriangle.prototype = triangle;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/09/hasOwnProperty/" data-id="cij66uwsz000kl19k2u71qifi" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/09/hasOwnProperty/" data-id="cikwnff76000uqc9kqbifoooo" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/09/hasOwnProperty/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -239,7 +519,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/07/prototype/" data-id="cij66uwsi000al19kvbkygl9e" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/07/prototype/" data-id="cikwnff6k000gqc9krqvc9cvv" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/07/prototype/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -296,7 +576,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/05/promise-study/" data-id="cij66uwso000dl19k9e09vapr" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/05/promise-study/" data-id="cikwnff6m000jqc9kd6vchw8u" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/05/promise-study/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -339,7 +619,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/12/21/speed-up-webstorm-debug/" data-id="cij66uwsg0009l19kpfehqaej" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2015/12/21/speed-up-webstorm-debug/" data-id="cikwnff67000cqc9ka3t24kry" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2015/12/21/speed-up-webstorm-debug/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -392,7 +672,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/" data-id="cij66uwsw000hl19kziiqr9ha" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/" data-id="cikwnff6z000oqc9kx142qpfp" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -406,276 +686,10 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
 
 
   
-    <article id="post-Jenkins上搭建Android构建环境" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/11/19/Jenkins上搭建Android构建环境/" class="article-date">
-  <time datetime="2015-11-19T00:28:45.000Z" itemprop="datePublished">2015-11-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/19/Jenkins上搭建Android构建环境/">Jenkins上搭建Android构建环境</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>每天要打包给别人看实在太麻烦，所以就用jenkins搭了一个Android CI系统。可以用来跑测试用例，可以用来编译项目，然后把生成的包发到相关人员那里去。以后产品上线了，还可以编译各种渠道包。</p>
-<h2 id="搭建流程">搭建流程</h2><h3 id="搭建jenkins">搭建jenkins</h3><p>搭建方法看<a href="https://jenkins-ci.org/" target="_blank" rel="external">这里</a>, 可以按照官网的做，也可以求省心下一个docker一次搞定。</p>
-<h3 id="在服务器上搭建android构建环境">在服务器上搭建android构建环境</h3><p>首先说明一点，我是使用gradle的方式来打包的，如果你们是用ant或者maven来打包，那么这个教程并不适合你。</p>
-<ul>
-<li><strong>下载 android sdk</strong></li>
-</ul>
-<p>从<a href="http://www.android.com/" target="_blank" rel="external">android官网</a>上下载sdk的zip包, 然后解压到服务器上。</p>
-<p>然后执行：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android update sdk --no-ui</span><br></pre></td></tr></table></figure>
-<p>来下载所有sdk相关的信息。</p>
-<p>如果你的服务器在国内，那么这个下载过程可能会被墙，这时候你需要在本地搭建一个http代理。因为我只有shadowsocks，所以我通过shadowsocks+privoxy的方式来搭建。<br>假如说你的代理的端口是8118（privoxy的默认端口就是这个）, 那么你就可以通过执行下面的命令来使用代理</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android update sdk --no-ui --proxy-host 127.0.0.1 --proxy-port 8118</span><br></pre></td></tr></table></figure>
-<p>过了很久之后，这时候你的sdk就搭建好了。但是如果你的服务器用的64位的，这时候你应该会碰到aapt没法执行的问题。原因是aapt需要对应的32位的库才能运行。这时候你需要去网上搜怎么在你对应的平台下安装zlib库。</p>
-<ul>
-<li><strong>安装gradle</strong></li>
-</ul>
-<p>这里需要强调一点，我在网上发现了JakeWarthon大神一个牛逼的<a href="https://github.com/JakeWharton/sdk-manager-plugin" target="_blank" rel="external">项目</a>，可以帮你下载gradle中缺少的一些系统级的依赖。应该能够给你在搭建gradle环境中减少不少时间。</p>
-<h3 id="配置jenkins">配置jenkins</h3><ul>
-<li><strong>创建项目</strong></li>
-</ul>
-<p>和一般项目一样，创建一个<code>自由软件风格</code>的项目，然后在构建选项里面输入你的构建命令， 比如我就是<code>gradle assembleProductionDebug</code>。</p>
-<ul>
-<li><strong>配置webhook</strong></li>
-</ul>
-<p>如果你需要在你有代码push的时候就执行构建，那么在项目的webhook那一栏输入一个自定义的token。同时这时候jenkins会给你一个url, 你把这个url填入到github或者gitlab的webhook里面去，然后你每次push代码，服务器就能够自动执行构建了。</p>
-<ul>
-<li><strong>电子邮件</strong></li>
-</ul>
-<p>在编译完成之后，我们希望把生成的apk发送到别人的邮箱里面。这时候需要安装Ext-Email plugin， 然后在plugin的attachment里面填上生成apk文件的地址。<br>如果你还希望把你的修改日志也发送在邮件里面，那么可以在content里面加上下面这一段:</p>
-<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">修改日志:</span><br><span class="line">$&#123;CHANGES, showPaths=true, format=<span class="string">"%a: %r %p \n--\"</span><span class="decorator">%m</span>\<span class="string">""</span>, pathFormat=<span class="string">"\n\t- %p"</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$DEFAULT</span>_PRESEND_SCRIPT</span><br></pre></td></tr></table></figure>
-<h2 id="最终效果">最终效果</h2><p>下面就是最终用户收到的邮件：</p>
-<p><img src="/QQ20151119-0@2x.png" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/11/19/Jenkins上搭建Android构建环境/" data-id="cij66uwta000ol19k9ig68151" class="article-share-link">Share</a>
-      
-        <a href="http://bettycc.com/2015/11/19/Jenkins上搭建Android构建环境/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CI-Jenkins-Android/">CI Jenkins Android</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-S-O-L-I-D之开闭原则" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/11/06/S-O-L-I-D之开闭原则/" class="article-date">
-  <time datetime="2015-11-06T03:26:04.000Z" itemprop="datePublished">2015-11-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/06/S-O-L-I-D之开闭原则/">S.O.L.I.D之开闭原则</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="开闭原则">开闭原则</h2><h3 id="什么是开闭原则">什么是开闭原则</h3><p><code>在面向对象编程领域中，开闭原则规定“软件中的对象（类，模块，函数等等）应该对于扩展是开放的，但是对于修改是封闭的”</code></p>
-<p>换句话说，开闭原则做了一件很神器的事情：在我们对软件功能修改的时候, 并没有对原来的类进行修改，但是确实对软件的功能进行了修改。</p>
-<h3 id="如何做到开闭">如何做到开闭</h3><p><strong>模板方法</strong></p>
-<p>在android里面所有的视图类都集成于View。</p>
-<p>View的结构如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//code</span></span><br><span class="line">        onDraw(canvas);</span><br><span class="line">        <span class="comment">//code</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这时候你就可以继承View，来绘制你所需要的图形。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">        drawTriangle();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>装饰者模式</strong></p>
-<p>java中的io类。</p>
-<p>如果你需要对一个InputStream加上从文件读取的功能，那么就用FileInputStream进行包装</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InputStream stream = <span class="keyword">new</span> InputStream()</span><br><span class="line">FileInputStream fis = <span class="keyword">new</span> FileInputStream(stream);</span><br></pre></td></tr></table></figure>
-<p>inputStream的代码逻辑没有被改写，但是你现在获取到了新的，对文件操作的能力。</p>
-<h3 id="开闭原则的好处">开闭原则的好处</h3><p>更好的保证了类的内聚，在修改代码之后不需要对类进行重新编译。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/11/06/S-O-L-I-D之开闭原则/" data-id="cij66uwt3000ll19kwb8xgl7g" class="article-share-link">Share</a>
-      
-        <a href="http://bettycc.com/2015/11/06/S-O-L-I-D之开闭原则/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CleanCode/">CleanCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/团队分享/">团队分享</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-解决jenkins没法发送邮件到gmail的问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" class="article-date">
-  <time datetime="2015-11-05T06:59:50.000Z" itemprop="datePublished">2015-11-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/05/解决jenkins没法发送邮件到gmail的问题/">解决jenkins没法发送邮件到gmail的问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前段时间搞了个jenkins服务器跑测试用例，但是很奇怪的事情是用它自带的smtp服务器进行发送不够稳定，而且不能发送到gmail（<del>原因未知</del>）。</p>
-<p>就这样忍受了好长一段时间之后我终于受不了了，然后放狗去google上搜了一圈，然后折腾了一下终于找到解决方法如下：</p>
-<h3 id="设置Admin_Email_Address">设置Admin Email Address</h3><p>设置的地方在， 系统管理 -&gt; 系统设置 -&gt; Jenkins Location ， 如下图</p>
-<p><img src="/QQ20151105-0@2x.png" alt=""></p>
-<p>地址填写你的smtp服务器对应的邮件账号的地址</p>
-<h3 id="配置smtp服务器">配置smtp服务器</h3><p>还是在系统设置界面，最下面配置。smtp服务器的配置方法可以去你对应的电子邮件提供商的官网查。</p>
-<p><strong>如果是qq这种垃圾邮箱的话，还要在设置里面开启smtp权限</strong></p>
-<p><img src="/QQ20151105-3@2x.png" alt=""></p>
-<p><img src="/QQ20151105-4@2x.png" alt=""></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/" data-id="cij66uws00001l19ksir0k5s9" class="article-share-link">Share</a>
-      
-        <a href="http://bettycc.com/2015/11/05/解决jenkins没法发送邮件到gmail的问题/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CI/">CI</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-mongoose中populate" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/11/05/mongoose中populate/" class="article-date">
-  <time datetime="2015-11-05T02:50:51.000Z" itemprop="datePublished">2015-11-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/05/mongoose中populate/">mongoose中populate</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前一直很想不通mongoose里面的populate到底做了什么事情，然后用populate和自己手动<code>findById</code>有什么区别。因为mongodb里面没有join，我一直希望populate能够带来效率上的提升。</p>
-<h3 id="Populate源码">Populate源码</h3><p>地址在<a href="https://github.com/Automattic/mongoose/blob/c76effbf2c9a6f7f1e6e7cc359a1b7d04a526e14/lib/model.js#L2264" target="_blank" rel="external">这里</a></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  mod.Model.find(match, select, mod.options.options, next.bind(<span class="keyword">this</span>, mod.options, assignmentOpts));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">options, assignmentOpts, err, valsFromDb</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (err) <span class="keyword">return</span> promise.resolve(err);</span><br><span class="line">  vals = vals.concat(valsFromDb);</span><br><span class="line">  <span class="keyword">if</span> (--_remaining === <span class="number">0</span>) &#123;</span><br><span class="line">    promise.resolve(err, vals, options, assignmentOpts);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们就看最后的这几行。</p>
-<p>从方法体上，我们可以看到pouplate是通过<code>cb</code>来进行回调的。但是，由于中间用了promise对<code>cb</code>进行了一次封装，所以最终的回调发生在next函数中的<code>promise.resolve(err, vals, options, assignmentOpts);</code></p>
-<p>这样子，问题就变得简单了。populate的实现过程是，首先组件好对待populate的信息的查询和排序操作，然后用<code>mod.Model.find</code>进行第一次查询，查询成功之后，next方法会被调用到，然后实现数据的填充。</p>
-<h2 id="结论">结论</h2><p>populate也就是普通的对每个条目的查询，效率和手动查询，然后再在替换并没有提升。所以以后大家在对mongoose populate和手动populate进行选择的时候就不用纠结了啊。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/11/05/mongoose中populate/" data-id="cij66uwss000el19k27zjt0nw" class="article-share-link">Share</a>
-      
-        <a href="http://bettycc.com/2015/11/05/mongoose中populate/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node-js/">Node.js</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-teamshare-SRP" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/30/teamshare-SRP/" class="article-date">
-  <time datetime="2015-10-30T03:56:45.000Z" itemprop="datePublished">2015-10-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/30/teamshare-SRP/">teamshare-SRP</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="SRP">SRP</h1><p>SRP is short for single responsible principle. It decribes when we build software, we should make class have only one reason to change. When achived this, it will help us to seprete concern. It doesn’t mean a method should do only one thing, but only have one reason to change.</p>
-<h3 id="Code_example">Code example</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;@implement Rectangle &#10;- (void) draw&#10;&#123;&#10;    code&#10;&#125;&#10;&#10;- (CGFloat)area&#10;&#123;&#10;    code&#10;&#125;&#10;@end</span><br></pre></td></tr></table></figure>
-<p>If we change the draw style, the <code>Rectangle</code> will be changed. If area calculating algorithm changes, it also will be changed.</p>
-<p>Better design:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@implement Rectangle&#10;- (void) draw&#10;&#123;&#10;    code&#10;&#125;&#10;@end&#10;&#10;@implent GeometricRectangle&#10;+ (CGFloat)area:(Rectangle *)rect&#10;&#123;&#10;    code&#10;&#125;&#10;@end</span><br></pre></td></tr></table></figure>
-<h3 id="What_is_responsibility">What is responsibility</h3><p>Motive for changing a class. If you can think of more than one motive for changing a class, then that class has more than one responsibilty.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@interface Modem&#10;&#123;&#10;    - (void)dial:(NSString)number;&#10;    - (void)hangup;&#10;    - (void)send:(NSString)singleCharacter;&#10;    - (void)recv;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>We can sperate it into two category. One is connection. So dial and hangup belows to this category. The other is data communication. It contains send and recv.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/10/30/teamshare-SRP/" data-id="cij66uwsa0004l19kd0c1duxv" class="article-share-link">Share</a>
-      
-        <a href="http://bettycc.com/2015/10/30/teamshare-SRP/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CleanCode/">CleanCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/团队分享/">团队分享</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 </section>
         
@@ -687,7 +701,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-Jenkins-Android/">CI Jenkins Android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CleanCode/">CleanCode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队分享/">团队分享</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-Jenkins-Android/">CI Jenkins Android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CleanCode/">CleanCode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins-Bitbar/">Jenkins Bitbar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-webpack-front-end/">react webpack front-end</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队分享/">团队分享</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -696,7 +710,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-Jenkins-Android/" style="font-size: 10px;">CI Jenkins Android</a> <a href="/tags/CleanCode/" style="font-size: 20px;">CleanCode</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/团队分享/" style="font-size: 20px;">团队分享</a>
+      <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-Jenkins-Android/" style="font-size: 10px;">CI Jenkins Android</a> <a href="/tags/CleanCode/" style="font-size: 20px;">CleanCode</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Jenkins-Bitbar/" style="font-size: 10px;">Jenkins Bitbar</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/react-webpack-front-end/" style="font-size: 10px;">react webpack front-end</a> <a href="/tags/团队分享/" style="font-size: 20px;">团队分享</a>
     </div>
   </div>
 
@@ -705,7 +719,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -717,23 +731,23 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       <ul>
         
           <li>
-            <a href="/2016/01/09/hasOwnProperty/">javascript中的属性</a>
+            <a href="/2016/02/21/reacterize-admin/">前端动态化</a>
           </li>
         
           <li>
-            <a href="/2016/01/07/prototype/">javascript中的原型链</a>
+            <a href="/2016/02/17/need-to-RTFM/">论RTFM的重要性</a>
           </li>
         
           <li>
-            <a href="/2016/01/05/promise-study/">关于Promise串行执行</a>
+            <a href="/2016/02/16/jenkins-master-slave/">Jenkins分布式部署</a>
           </li>
         
           <li>
-            <a href="/2015/12/21/speed-up-webstorm-debug/">加快Webstorm调试速度</a>
+            <a href="/2016/01/19/bitbar/">实时监控项目集成情况</a>
           </li>
         
           <li>
-            <a href="/2015/12/02/mongoDb-aggregation-framework/">关于MongoDB上的aggregation framework的研究</a>
+            <a href="/2016/01/14/upgrade-node/">Node升级到4.0</a>
           </li>
         
       </ul>
@@ -761,8 +775,6 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
     <a href="/archives" class="mobile-nav-link">Archives</a>
   
     <a href="https://github.com/ufo22940268" class="mobile-nav-link">Github</a>
-  
-    <a href="/About-Me.html" class="mobile-nav-link">About Me</a>
   
 </nav>
     

@@ -3,17 +3,39 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: CleanCode | Shut up and keep coding</title>
+  <title>Jenkins分布式部署 | Shut up and keep coding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Shut up and keep coding">
-<meta property="og:url" content="http://bettycc.com/tags/CleanCode/index.html">
+  <meta name="description" content="Jenkins其实自带分布式特性.他的分布式是Master/Slave的模型.在Master上分配任务,然后在Slave或者Master上完成.
+作用这个特性带来两个好处
+
+能够有效分单主节点上的压力,加快构建速度.
+能够制定特定的任务在特定的主机上进行.
+
+接下来我着重说下第二特性
+比如说我们现在有一个情景,服务器的类型分为: 抓取服务器, 应用服务器, Jenkins服务器.这时候,我们需要创">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins分布式部署">
+<meta property="og:url" content="http://bettycc.com/2016/02/16/jenkins-master-slave/index.html">
 <meta property="og:site_name" content="Shut up and keep coding">
-<meta property="og:description">
+<meta property="og:description" content="Jenkins其实自带分布式特性.他的分布式是Master/Slave的模型.在Master上分配任务,然后在Slave或者Master上完成.
+作用这个特性带来两个好处
+
+能够有效分单主节点上的压力,加快构建速度.
+能够制定特定的任务在特定的主机上进行.
+
+接下来我着重说下第二特性
+比如说我们现在有一个情景,服务器的类型分为: 抓取服务器, 应用服务器, Jenkins服务器.这时候,我们需要创">
+<meta property="og:updated_time" content="2016-02-21T14:26:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shut up and keep coding">
-<meta name="twitter:description">
+<meta name="twitter:title" content="Jenkins分布式部署">
+<meta name="twitter:description" content="Jenkins其实自带分布式特性.他的分布式是Master/Slave的模型.在Master上分配任务,然后在Slave或者Master上完成.
+作用这个特性带来两个好处
+
+能够有效分单主节点上的压力,加快构建速度.
+能够制定特定的任务在特定的主机上进行.
+
+接下来我着重说下第二特性
+比如说我们现在有一个情景,服务器的类型分为: 抓取服务器, 应用服务器, Jenkins服务器.这时候,我们需要创">
 <meta name="twitter:creator" content="@https://twitter.com/hongbosb">
 <link rel="publisher" href="https://plus.google.com/114653038771687386034">
 <meta property="fb:app_id" content="https://www.facebook.com/profile.php?id=100005478555637">
@@ -68,58 +90,85 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/11/06/S-O-L-I-D之开闭原则/" class="archive-article-date">
-  <time datetime="2015-11-06T03:26:04.000Z" itemprop="datePublished">11月 6</time>
+        <section id="main"><article id="post-jenkins-master-slave" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/16/jenkins-master-slave/" class="article-date">
+  <time datetime="2016-02-16T03:15:43.000Z" itemprop="datePublished">2016-02-16</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/11/06/S-O-L-I-D之开闭原则/">S.O.L.I.D之开闭原则</a>
+    <h1 class="article-title" itemprop="name">
+      Jenkins分布式部署
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/10/30/teamshare-SRP/" class="archive-article-date">
-  <time datetime="2015-10-30T03:56:45.000Z" itemprop="datePublished">10月 30</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/10/30/teamshare-SRP/">teamshare-SRP</a>
-    </h1>
-  
+        <p>Jenkins其实自带分布式特性.他的分布式是<code>Master/Slave</code>的模型.在<code>Master</code>上分配任务,然后在<code>Slave</code>或者<code>Master</code>上完成.</p>
+<h2 id="作用">作用</h2><p>这个特性带来两个好处</p>
+<ul>
+<li>能够有效分单主节点上的压力,加快构建速度.</li>
+<li>能够制定特定的任务在特定的主机上进行.</li>
+</ul>
+<p>接下来我着重说下第二特性</p>
+<p>比如说我们现在有一个情景,服务器的类型分为: <code>抓取服务器</code>, <code>应用服务器</code>, <code>Jenkins服务器</code>.<br>这时候,我们需要创建一个Jenkins的任务来完成定期的抓取工作,这时候如果我们在<code>Jenkins服务器</code>上创建,那么创建的任务只能够在本地运行.</p>
+<p>这时候分布式的优点就体现出来了. 你可以按照下面的流程操作</p>
+<h3 id="添加ssh秘钥">添加ssh秘钥</h3><p>保证Jenkins服务器能够通过ssh连接到抓取服务器.<br>在jenkins服务器上执行</p>
+<pre><code>ssh-<span class="keyword">copy</span>-<span class="property">id</span> user@scraping-server-adddress.com
+</code></pre><h3 id="创建节点">创建节点</h3><p>进入<code>Jenkins服务器</code>后台, 然后<code>管理节点</code>-<code>创建节点</code>, 勾选<code>Dumb Server</code>(<del>不勾选不让创建,具体信息可以在下一步填写</del>).输入<code>抓取服务器</code>的地址,在<code>启动方法</code>中选择<code>Launch slave agents on Unix machines via SSH</code>.然后保存.</p>
+<h3 id="创建任务">创建任务</h3><p>按照普通的创建任务的方法创建一个Jenkins任务, 但是在<code>Restrict where this project can be run</code>中输入刚刚创建的节点的名字.</p>
+<h3 id="运行任务">运行任务</h3><p>点击构建任务.这时候你的任务应该只在<code>抓取服务器中运行</code></p>
 
-    </header>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/02/16/jenkins-master-slave/" data-id="cikwnff72000rqc9kswfthkxi" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/02/16/jenkins-master-slave/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jenkins/">Jenkins</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/02/17/need-to-RTFM/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          论RTFM的重要性
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/19/bitbar/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">实时监控项目集成情况</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 </section>
         
           <aside id="sidebar">
@@ -210,11 +259,13 @@
 <script>
   var disqus_shortname = 'bettcc';
   
+  var disqus_url = 'http://bettycc.com/2016/02/16/jenkins-master-slave/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

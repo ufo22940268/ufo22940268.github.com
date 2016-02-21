@@ -3,17 +3,51 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: CleanCode | Shut up and keep coding</title>
+  <title>Node升级到4.0 | Shut up and keep coding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Shut up and keep coding">
-<meta property="og:url" content="http://bettycc.com/tags/CleanCode/index.html">
+  <meta name="description" content="看到各种开源项目都纷纷用上了es6，包括express, mongoose等等。我感觉也是时候升级公司的项目了。
+升级Node直接使用TJ大神的n来安装node。  
+
+如果你想升级到最新的stable的版本
+n stable 
+
+如果你只是想升级到LTS
+n 4.2.4
+
+
+碰到依赖问题我碰到的是to-markdown不能正常install,  报的是gyp-build的错。
+解决方案一放狗去网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node升级到4.0">
+<meta property="og:url" content="http://bettycc.com/2016/01/14/upgrade-node/index.html">
 <meta property="og:site_name" content="Shut up and keep coding">
-<meta property="og:description">
+<meta property="og:description" content="看到各种开源项目都纷纷用上了es6，包括express, mongoose等等。我感觉也是时候升级公司的项目了。
+升级Node直接使用TJ大神的n来安装node。  
+
+如果你想升级到最新的stable的版本
+n stable 
+
+如果你只是想升级到LTS
+n 4.2.4
+
+
+碰到依赖问题我碰到的是to-markdown不能正常install,  报的是gyp-build的错。
+解决方案一放狗去网">
+<meta property="og:updated_time" content="2016-02-21T14:26:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shut up and keep coding">
-<meta name="twitter:description">
+<meta name="twitter:title" content="Node升级到4.0">
+<meta name="twitter:description" content="看到各种开源项目都纷纷用上了es6，包括express, mongoose等等。我感觉也是时候升级公司的项目了。
+升级Node直接使用TJ大神的n来安装node。  
+
+如果你想升级到最新的stable的版本
+n stable 
+
+如果你只是想升级到LTS
+n 4.2.4
+
+
+碰到依赖问题我碰到的是to-markdown不能正常install,  报的是gyp-build的错。
+解决方案一放狗去网">
 <meta name="twitter:creator" content="@https://twitter.com/hongbosb">
 <link rel="publisher" href="https://plus.google.com/114653038771687386034">
 <meta property="fb:app_id" content="https://www.facebook.com/profile.php?id=100005478555637">
@@ -68,58 +102,84 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/11/06/S-O-L-I-D之开闭原则/" class="archive-article-date">
-  <time datetime="2015-11-06T03:26:04.000Z" itemprop="datePublished">11月 6</time>
+        <section id="main"><article id="post-upgrade-node" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/14/upgrade-node/" class="article-date">
+  <time datetime="2016-01-14T02:23:30.000Z" itemprop="datePublished">2016-01-14</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/11/06/S-O-L-I-D之开闭原则/">S.O.L.I.D之开闭原则</a>
+    <h1 class="article-title" itemprop="name">
+      Node升级到4.0
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/10/30/teamshare-SRP/" class="archive-article-date">
-  <time datetime="2015-10-30T03:56:45.000Z" itemprop="datePublished">10月 30</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/10/30/teamshare-SRP/">teamshare-SRP</a>
-    </h1>
-  
+        <p>看到各种开源项目都纷纷用上了<code>es6</code>，包括<code>express</code>, <code>mongoose</code>等等。我感觉也是时候升级公司的项目了。</p>
+<h2 id="升级Node">升级Node</h2><p>直接使用TJ大神的<a href="https://www.npmjs.com/package/n" target="_blank" rel="external">n</a>来安装node。  </p>
+<ul>
+<li><p>如果你想升级到最新的stable的版本</p>
+<pre><code>n <span class="preprocessor">stable</span> 
+</code></pre></li>
+<li><p>如果你只是想升级到LTS</p>
+<pre><code>n <span class="number">4.2</span><span class="number">.4</span>
+</code></pre></li>
+</ul>
+<h2 id="碰到依赖问题">碰到依赖问题</h2><p>我碰到的是<code>to-markdown</code>不能正常<code>install</code>,  报的是<code>gyp-build</code>的错。</p>
+<h3 id="解决方案一">解决方案一</h3><p>放狗去网上搜了一圈之后，发现<a href="https://github.com/mafintosh/node-gyp-install" target="_blank" rel="external">node-gyp-install</a>这个库能够解决这个问题。然后按照<code>README</code>操作一番，mac上能够正常跑过所有测试用例了。<br>但是很遗憾，在服务器上的<code>CentOS</code>上还是没法正常install。</p>
+<h3 id="解决方案二">解决方案二</h3><p>看了下<code>to-markdown</code>的文档，发现其<strong>v2.0</strong>版本能够支持<code>node 4</code>。然后升级完成之后服务器上的问题也解决了。</p>
 
-    </header>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/01/14/upgrade-node/" data-id="cikwnff5z0004qc9k4l00cqfd" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/01/14/upgrade-node/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/19/bitbar/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          实时监控项目集成情况
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/09/hasOwnProperty/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">javascript中的属性</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 </section>
         
           <aside id="sidebar">
@@ -210,11 +270,13 @@
 <script>
   var disqus_shortname = 'bettcc';
   
+  var disqus_url = 'http://bettycc.com/2016/01/14/upgrade-node/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

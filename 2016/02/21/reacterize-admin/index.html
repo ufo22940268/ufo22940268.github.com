@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>前端动态化 | Shut up and keep coding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="之前做了了一个管理后台,用的还是那些老掉牙的bootstrap+jquery.交互方式还是以静态的为主,随便改个数据就全局刷新.感觉很 low,不过想想也就我们公司的内部人员用的,所以丑一点也无所谓, 稳定压倒一切嘛直到后面,我发现了这种开发模型的有下面几个弊端
+
+复用度不够 比如说我们在界面A上开发了一个组件,要在 B上用,就很不方便.
+全局 CSS 可能因为我在移动开发的时候的观念先入为主了,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端动态化">
+<meta property="og:url" content="http://bettycc.com/2016/02/21/reacterize-admin/index.html">
+<meta property="og:site_name" content="Shut up and keep coding">
+<meta property="og:description" content="之前做了了一个管理后台,用的还是那些老掉牙的bootstrap+jquery.交互方式还是以静态的为主,随便改个数据就全局刷新.感觉很 low,不过想想也就我们公司的内部人员用的,所以丑一点也无所谓, 稳定压倒一切嘛直到后面,我发现了这种开发模型的有下面几个弊端
+
+复用度不够 比如说我们在界面A上开发了一个组件,要在 B上用,就很不方便.
+全局 CSS 可能因为我在移动开发的时候的观念先入为主了,">
+<meta property="og:updated_time" content="2016-02-21T14:25:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端动态化">
+<meta name="twitter:description" content="之前做了了一个管理后台,用的还是那些老掉牙的bootstrap+jquery.交互方式还是以静态的为主,随便改个数据就全局刷新.感觉很 low,不过想想也就我们公司的内部人员用的,所以丑一点也无所谓, 稳定压倒一切嘛直到后面,我发现了这种开发模型的有下面几个弊端
+
+复用度不够 比如说我们在界面A上开发了一个组件,要在 B上用,就很不方便.
+全局 CSS 可能因为我在移动开发的时候的观念先入为主了,">
+<meta name="twitter:creator" content="@https://twitter.com/hongbosb">
+<link rel="publisher" href="https://plus.google.com/114653038771687386034">
+<meta property="fb:app_id" content="https://www.facebook.com/profile.php?id=100005478555637">
+  
+    <link rel="alternative" href="/atom.xml" title="Shut up and keep coding" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Shut up and keep coding</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Android &amp;&amp; Node.js Developer</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/ufo22940268">Github</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://bettycc.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-reacterize-admin" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/21/reacterize-admin/" class="article-date">
+  <time datetime="2016-02-21T13:58:59.000Z" itemprop="datePublished">2016-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      前端动态化
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前做了了一个管理后台,用的还是那些老掉牙的bootstrap+jquery.交互方式还是以静态的为主,随便改个数据就全局刷新.感觉很 low,不过想想也就我们公司的内部人员用的,所以丑一点也无所谓, <code>稳定压倒一切嘛</code><br>直到后面,我发现了这种开发模型的有下面几个弊端</p>
+<ul>
+<li><strong>复用度不够</strong> 比如说我们在界面A上开发了一个组件,要在 B上用,就很不方便.</li>
+<li><strong>全局 CSS</strong> 可能因为我在移动开发的时候的观念先入为主了,所以我对那种把所有的 css 文件都放在一个<code>main.css</code>里面,然后用各种 prefix, postfix 命名来区分不同区域的class 做法总是难以接受.</li>
+</ul>
+<p>直到上周末,我们业务发生修改.我想,是时候给前端加一些高级特性了,然后就开始重写整个前端框架.</p>
+<p>#引入 React</p>
+<p>没有错,react 一直是我比较喜欢的技术.它在处理前端模块化的时候能起到非常不错的作用.关于 react 基本用法,这里就不说了(<del>我也许懂得和你差不多</del>).但是这里要着重强调下一个超级牛逼的liverload的<a href="https://gaearon.github.io/react-hot-loader/getstarted/" target="_blank" rel="external">解决方案</a>,这个解决方案能够避免传统 livereload 的一些 side effect,比如说有的时候文件修改了但是网页没有刷新呀, 重新加载有延迟之类的.</p>
+<p>#引入 React router</p>
+<p>有人说</p>
+<blockquote>
+<p>react是一款很好的开发框架,但是它却没有一个原生的 router.</p>
+</blockquote>
+<p>于是就有了<a href="https://github.com/reactjs/react-router" target="_blank" rel="external">react-router</a>. 他的做法是通过把后端的 router 转到前端来,从而达到更多的前端代码复用,同事也加快了跳转速度.因为通过 router 跳转,其实仅仅只是替换了Dom tree而已.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(</span><br><span class="line">  (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="title">Router</span> <span class="attribute">history</span>=<span class="value">&#123;reactRouter.browserHistory&#125;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">Route</span> <span class="attribute">path</span>=<span class="value">"/login"</span> <span class="attribute">component</span>=<span class="value">&#123;Login&#125;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">Route</span> <span class="attribute">path</span>=<span class="value">"/"</span> <span class="attribute">component</span>=<span class="value">&#123;App&#125;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">IndexRoute</span> <span class="attribute">component</span>=<span class="value">&#123;ReviewList&#125;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">Route</span> <span class="attribute">path</span>=<span class="value">"review/list"</span> <span class="attribute">component</span>=<span class="value">&#123;ReviewList&#125;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">Route</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">Router</span>&gt;</span></span><br><span class="line">  )</span>,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'container'</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>看起啦大概是这样子. 但是你可能会困惑,前端路由是怎么保证连接的永久有效呢?<br>要做到连接的永久有效,必然需要后端和前端配合起来进行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'*'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">  response.render(<span class="string">'newIndex'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>加上这个路由之后,就能够保证每次请求,都能够用同一个前端路由进行处理,这样子就保证了地址的永久有效.</p>
+<p>#引入 webpack </p>
+<p>webpack确实是特别帅的模块化工具.各种 loader 把css, json, jsx都转换成 javascript 进行加载.<br>所以这之后,你在 javascript 代码里面就能通过这种方式引入 css 文件了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> css <span class="keyword">from</span> <span class="string">'css/reviewList.css'</span>;</span><br></pre></td></tr></table></figure>
+<p>是不是很酷!更酷的事情是,你如果启用了<code>css-loader</code>中的 <a href="https://github.com/webpack/css-loader#local-scope" target="_blank" rel="external">module 功能</a>,你还能生成局部的 css 命名文件,再也不用担心元素命名冲突了.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/02/21/reacterize-admin/" data-id="cikwnff69000dqc9kcd4imbvo" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/02/21/reacterize-admin/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react-webpack-front-end/">react webpack front-end</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/02/17/need-to-RTFM/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">论RTFM的重要性</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI/">CI</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CI-Jenkins-Android/">CI Jenkins Android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CleanCode/">CleanCode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins-Bitbar/">Jenkins Bitbar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mongodb/">mongodb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react-webpack-front-end/">react webpack front-end</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团队分享/">团队分享</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CI/" style="font-size: 10px;">CI</a> <a href="/tags/CI-Jenkins-Android/" style="font-size: 10px;">CI Jenkins Android</a> <a href="/tags/CleanCode/" style="font-size: 20px;">CleanCode</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Jenkins-Bitbar/" style="font-size: 10px;">Jenkins Bitbar</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/react-webpack-front-end/" style="font-size: 10px;">react webpack front-end</a> <a href="/tags/团队分享/" style="font-size: 20px;">团队分享</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/02/21/reacterize-admin/">前端动态化</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/17/need-to-RTFM/">论RTFM的重要性</a>
+          </li>
+        
+          <li>
+            <a href="/2016/02/16/jenkins-master-slave/">Jenkins分布式部署</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/19/bitbar/">实时监控项目集成情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/14/upgrade-node/">Node升级到4.0</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Frank Cheng<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/ufo22940268" class="mobile-nav-link">Github</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'bettcc';
+  
+  var disqus_url = 'http://bettycc.com/2016/02/21/reacterize-admin/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
