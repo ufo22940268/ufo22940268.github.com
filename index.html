@@ -98,10 +98,8 @@
 <li><strong>全局 CSS</strong> 可能因为我在移动开发的时候的观念先入为主了,所以我对那种把所有的 css 文件都放在一个<code>main.css</code>里面,然后用各种 prefix, postfix 命名来区分不同区域的class 做法总是难以接受.</li>
 </ul>
 <p>直到上周末,我们业务发生修改.我想,是时候给前端加一些高级特性了,然后就开始重写整个前端框架.</p>
-<p>#引入 React</p>
-<p>没有错,react 一直是我比较喜欢的技术.它在处理前端模块化的时候能起到非常不错的作用.关于 react 基本用法,这里就不说了(<del>我也许懂得和你差不多</del>).但是这里要着重强调下一个超级牛逼的liverload的<a href="https://gaearon.github.io/react-hot-loader/getstarted/" target="_blank" rel="external">解决方案</a>,这个解决方案能够避免传统 livereload 的一些 side effect,比如说有的时候文件修改了但是网页没有刷新呀, 重新加载有延迟之类的.</p>
-<p>#引入 React router</p>
-<p>有人说</p>
+<h1 id="引入_React">引入 React</h1><p>没有错,react 一直是我比较喜欢的技术.它在处理前端模块化的时候能起到非常不错的作用.关于 react 基本用法,这里就不说了(<del>我也许懂得和你差不多</del>).但是这里要着重强调下一个超级牛逼的liverload的<a href="https://gaearon.github.io/react-hot-loader/getstarted/" target="_blank" rel="external">解决方案</a>,这个解决方案能够避免传统 livereload 的一些 side effect,比如说有的时候文件修改了但是网页没有刷新呀, 重新加载有延迟之类的.</p>
+<h1 id="引入_React_router">引入 React router</h1><p>有人说</p>
 <blockquote>
 <p>react是一款很好的开发框架,但是它却没有一个原生的 router.</p>
 </blockquote>
@@ -110,15 +108,14 @@
 <p>看起啦大概是这样子. 但是你可能会困惑,前端路由是怎么保证连接的永久有效呢?<br>要做到连接的永久有效,必然需要后端和前端配合起来进行</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'*'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">  response.render(<span class="string">'newIndex'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>加上这个路由之后,就能够保证每次请求,都能够用同一个前端路由进行处理,这样子就保证了地址的永久有效.</p>
-<p>#引入 webpack </p>
-<p>webpack确实是特别帅的模块化工具.各种 loader 把css, json, jsx都转换成 javascript 进行加载.<br>所以这之后,你在 javascript 代码里面就能通过这种方式引入 css 文件了</p>
+<h1 id="引入_webpack">引入 webpack</h1><p>webpack确实是特别帅的模块化工具.各种 loader 把css, json, jsx都转换成 javascript 进行加载.<br>所以这之后,你在 javascript 代码里面就能通过这种方式引入 css 文件了</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> css <span class="keyword">from</span> <span class="string">'css/reviewList.css'</span>;</span><br></pre></td></tr></table></figure>
 <p>是不是很酷!更酷的事情是,你如果启用了<code>css-loader</code>中的 <a href="https://github.com/webpack/css-loader#local-scope" target="_blank" rel="external">module 功能</a>,你还能生成局部的 css 命名文件,再也不用担心元素命名冲突了.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/02/21/reacterize-admin/" data-id="cikwni8r0000dtv9kb9tlvpyf" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/02/21/reacterize-admin/" data-id="cikwo1ayx000d5p9kwaj741xv" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/02/21/reacterize-admin/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -184,7 +181,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/02/17/need-to-RTFM/" data-id="cikwni8ra000ktv9k3na8fy2m" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/02/17/need-to-RTFM/" data-id="cikwo1az4000k5p9k8pivsy4m" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/02/17/need-to-RTFM/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -236,7 +233,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/02/16/jenkins-master-slave/" data-id="cikwni8rl000rtv9k0lsn715d" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/02/16/jenkins-master-slave/" data-id="cikwo1azg000r5p9kj5gwz8s8" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/02/16/jenkins-master-slave/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -285,7 +282,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/19/bitbar/" data-id="cikwni8rt000vtv9k75uxhj88" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/19/bitbar/" data-id="cikwo1azn000v5p9km8ybwsfn" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/19/bitbar/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -338,7 +335,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/14/upgrade-node/" data-id="cikwni8qr0004tv9kmxp6yxdg" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/14/upgrade-node/" data-id="cikwo1aym00045p9kpfy6syon" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/14/upgrade-node/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -424,7 +421,7 @@ ColoredTriangle.prototype = triangle;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/09/hasOwnProperty/" data-id="cikwni8rq000utv9kvxsqwpha" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/09/hasOwnProperty/" data-id="cikwo1azk000u5p9kva43lgb8" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/09/hasOwnProperty/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -519,7 +516,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/07/prototype/" data-id="cikwni8r3000gtv9k88k4qs1b" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/07/prototype/" data-id="cikwo1ayz000g5p9kfq5mc8bj" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/07/prototype/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -576,7 +573,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/01/05/promise-study/" data-id="cikwni8r6000jtv9krow1t795" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/01/05/promise-study/" data-id="cikwo1az1000j5p9k3664f4gc" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/01/05/promise-study/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -619,7 +616,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/12/21/speed-up-webstorm-debug/" data-id="cikwni8qy000ctv9khl3mtmfw" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2015/12/21/speed-up-webstorm-debug/" data-id="cikwo1ayv000c5p9kakvfj0vb" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2015/12/21/speed-up-webstorm-debug/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -672,7 +669,7 @@ Animal --&gt;<span class="built_in">Object</span>.prototype
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/" data-id="cikwni8ri000otv9kiatsqzaf" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/" data-id="cikwo1azd000o5p9k3j3ldnld" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2015/12/02/mongoDb-aggregation-framework/#disqus_thread" class="article-comment-link">Comments</a>
       
