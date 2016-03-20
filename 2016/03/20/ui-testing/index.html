@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: Node.js | Shut up and keep coding</title>
+  <title>关于 ui 测试 | Shut up and keep coding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Shut up and keep coding">
-<meta property="og:url" content="http://bettycc.com/tags/Node-js/index.html">
+  <meta name="description" content="我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: 在开始写代码前,一定要先写好测试用例, 有了测试用例,就能够很清楚下一步该怎么走,我现在已经开始教女儿 TDD`了.   
+可是我的第一份工作负责的内容就是Android porting, 而且偏偏移植的是Framework层的内容.那时候天真的我就开始各种用performClick来模拟界面的点击, 用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于 ui 测试">
+<meta property="og:url" content="http://bettycc.com/2016/03/20/ui-testing/index.html">
 <meta property="og:site_name" content="Shut up and keep coding">
-<meta property="og:description">
+<meta property="og:description" content="我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: 在开始写代码前,一定要先写好测试用例, 有了测试用例,就能够很清楚下一步该怎么走,我现在已经开始教女儿 TDD`了.   
+可是我的第一份工作负责的内容就是Android porting, 而且偏偏移植的是Framework层的内容.那时候天真的我就开始各种用performClick来模拟界面的点击, 用">
+<meta property="og:updated_time" content="2016-03-20T12:01:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shut up and keep coding">
-<meta name="twitter:description">
+<meta name="twitter:title" content="关于 ui 测试">
+<meta name="twitter:description" content="我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: 在开始写代码前,一定要先写好测试用例, 有了测试用例,就能够很清楚下一步该怎么走,我现在已经开始教女儿 TDD`了.   
+可是我的第一份工作负责的内容就是Android porting, 而且偏偏移植的是Framework层的内容.那时候天真的我就开始各种用performClick来模拟界面的点击, 用">
 <meta name="twitter:creator" content="@https://twitter.com/hongbosb">
 <link rel="publisher" href="https://plus.google.com/114653038771687386034">
 <meta property="fb:app_id" content="https://www.facebook.com/profile.php?id=100005478555637">
@@ -68,39 +72,78 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/11/05/mongoose中populate/" class="archive-article-date">
-  <time datetime="2015-11-05T02:50:51.000Z" itemprop="datePublished">11月 5</time>
+        <section id="main"><article id="post-ui-testing" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/20/ui-testing/" class="article-date">
+  <time datetime="2016-03-20T11:42:57.000Z" itemprop="datePublished">2016-03-20</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/11/05/mongoose中populate/">mongoose中populate</a>
+    <h1 class="article-title" itemprop="name">
+      关于 ui 测试
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: <code>在开始写代码前,一定要先写好测试用例</code>, <code>有了测试用例,就能够很清楚下一步该怎么走,</code>我现在已经开始教女儿 TDD`了.   </p>
+<p>可是我的第一份工作负责的内容就是Android porting, 而且偏偏移植的是Framework层的内容.那时候天真的我就开始各种用<code>performClick</code>来模拟界面的点击, 用<code>instrument</code>来启动我想测试的<code>activity</code>进行测试.不仅每次运行测试用例极慢,而且特别难维护.<br>再后来,我又先后尝试了<code>robot</code>, <code>roboletric</code>, <code>espresso</code>等等 Android 测试框架但是都没能打到理想的代码覆盖度.再后来,我就开始转型做后端了.后端的测试倒是能做到全覆盖.</p>
+<p>所以直到现在,我还是在思考,如何做 ui 的测试.</p>
+<hr>
+<p>不过今天,我看到一个<a href="https://youtu.be/qqVbr_LaCIo?t=2m15s" target="_blank" rel="external">视频</a>给我非常大的启示.</p>
+<p>演讲者Pete Hunt在视频里面对 UI 开发的描述是</p>
+<blockquote>
+<p>Don’t try to be correct.<br>Try to be predictable.</p>
+</blockquote>
+<p>然后他接下来说了,关于UI开发的难点就在于各种 UI 模型中的状态实在太多了,然后很多状态都是可变的.所以我们应该通过下面几种方法来做到<code>predictable</code></p>
+<ul>
+<li>尽量统一 stmate,不让一个 state 存在多个地方.</li>
+<li>用类似于<a href="">Immunity.js</a>之类的项目, 来减少赋值.</li>
+<li>用各种方法让UI的变化可跟踪.</li>
+<li>组件化开发.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bettycc.com/2016/03/20/ui-testing/" data-id="cim0ijpci0007q09kv5soeahc" class="article-share-link">Share</a>
+      
+        <a href="http://bettycc.com/2016/03/20/ui-testing/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/">test</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/02/21/reacterize-admin/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">前端动态化</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 </section>
         
           <aside id="sidebar">
@@ -191,11 +234,13 @@
 <script>
   var disqus_shortname = 'bettcc';
   
+  var disqus_url = 'http://bettycc.com/2016/03/20/ui-testing/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
