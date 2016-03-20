@@ -5,18 +5,18 @@
   
   <title>关于 ui 测试 | Shut up and keep coding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: 在开始写代码前,一定要先写好测试用例, 有了测试用例,就能够很清楚下一步该怎么走,我现在已经开始教女儿 TDD`了.   
+  <meta name="description" content="我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: 在开始写代码前,一定要先写好测试用例, 有了测试用例,就能够很清楚下一步该怎么走, 我现在已经开始教女儿 TDD了.   
 可是我的第一份工作负责的内容就是Android porting, 而且偏偏移植的是Framework层的内容.那时候天真的我就开始各种用performClick来模拟界面的点击, 用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于 ui 测试">
 <meta property="og:url" content="http://bettycc.com/2016/03/20/ui-testing/index.html">
 <meta property="og:site_name" content="Shut up and keep coding">
-<meta property="og:description" content="我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: 在开始写代码前,一定要先写好测试用例, 有了测试用例,就能够很清楚下一步该怎么走,我现在已经开始教女儿 TDD`了.   
+<meta property="og:description" content="我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: 在开始写代码前,一定要先写好测试用例, 有了测试用例,就能够很清楚下一步该怎么走, 我现在已经开始教女儿 TDD了.   
 可是我的第一份工作负责的内容就是Android porting, 而且偏偏移植的是Framework层的内容.那时候天真的我就开始各种用performClick来模拟界面的点击, 用">
-<meta property="og:updated_time" content="2016-03-20T12:01:44.000Z">
+<meta property="og:updated_time" content="2016-03-20T12:03:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于 ui 测试">
-<meta name="twitter:description" content="我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: 在开始写代码前,一定要先写好测试用例, 有了测试用例,就能够很清楚下一步该怎么走,我现在已经开始教女儿 TDD`了.   
+<meta name="twitter:description" content="我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: 在开始写代码前,一定要先写好测试用例, 有了测试用例,就能够很清楚下一步该怎么走, 我现在已经开始教女儿 TDD了.   
 可是我的第一份工作负责的内容就是Android porting, 而且偏偏移植的是Framework层的内容.那时候天真的我就开始各种用performClick来模拟界面的点击, 用">
 <meta name="twitter:creator" content="@https://twitter.com/hongbosb">
 <link rel="publisher" href="https://plus.google.com/114653038771687386034">
@@ -94,7 +94,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: <code>在开始写代码前,一定要先写好测试用例</code>, <code>有了测试用例,就能够很清楚下一步该怎么走,</code>我现在已经开始教女儿 TDD`了.   </p>
+        <p>我一直是一个对自动化测试非常着迷的人.在刚开始进入工作的的时候,就非常认同Bent大神说的: <code>在开始写代码前,一定要先写好测试用例</code>, <code>有了测试用例,就能够很清楚下一步该怎么走</code>, <code>我现在已经开始教女儿 TDD了</code>.   </p>
 <p>可是我的第一份工作负责的内容就是Android porting, 而且偏偏移植的是Framework层的内容.那时候天真的我就开始各种用<code>performClick</code>来模拟界面的点击, 用<code>instrument</code>来启动我想测试的<code>activity</code>进行测试.不仅每次运行测试用例极慢,而且特别难维护.<br>再后来,我又先后尝试了<code>robot</code>, <code>roboletric</code>, <code>espresso</code>等等 Android 测试框架但是都没能打到理想的代码覆盖度.再后来,我就开始转型做后端了.后端的测试倒是能做到全覆盖.</p>
 <p>所以直到现在,我还是在思考,如何做 ui 的测试.</p>
 <hr>
@@ -105,7 +105,7 @@
 </blockquote>
 <p>然后他接下来说了,关于UI开发的难点就在于各种 UI 模型中的状态实在太多了,然后很多状态都是可变的.所以我们应该通过下面几种方法来做到<code>predictable</code></p>
 <ul>
-<li>尽量统一 stmate,不让一个 state 存在多个地方.</li>
+<li>尽量统一 state,不让一个 state 存在多个地方.</li>
 <li>用类似于<a href="">Immunity.js</a>之类的项目, 来减少赋值.</li>
 <li>用各种方法让UI的变化可跟踪.</li>
 <li>组件化开发.</li>
@@ -114,7 +114,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bettycc.com/2016/03/20/ui-testing/" data-id="cim0ijpci0007q09kv5soeahc" class="article-share-link">Share</a>
+      <a data-url="http://bettycc.com/2016/03/20/ui-testing/" data-id="cim0iloc90007t59k4z47slf2" class="article-share-link">Share</a>
       
         <a href="http://bettycc.com/2016/03/20/ui-testing/#disqus_thread" class="article-comment-link">Comments</a>
       
